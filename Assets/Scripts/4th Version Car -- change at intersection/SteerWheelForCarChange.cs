@@ -21,7 +21,7 @@ public class SteerWheelForCarChange : MonoBehaviour
     void Update()
     {
         float angle = hingeJoint.angle;
-        //Debug.Log($"hinge joint's angle is: {angle}");
+        Debug.Log($"hinge joint's angle is: {angle}");
 
         if (angle < -10 && previousAngle < 0)
         {
