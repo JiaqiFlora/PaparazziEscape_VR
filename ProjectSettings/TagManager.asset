@@ -3,7 +3,29 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Papp
+  - gear1
+  - Car
+  - gear4
+  - leftRot3
+  - brake
+  - gear5
+  - gear2
+  - gear0
+  - leftRot2
+  - leftRot4
+  - leftRot5
+  - zeroRot
+  - rightRot1
+  - gear3
+  - rightRot2
+  - rightRot5
+  - rightRot4
+  - rightRot3
+  - leftRot1
+  - Left Hand Model
+  - Right Hand Model
   layers:
   - Default
   - TransparentFX
@@ -11,8 +33,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Interactable
   - 
   - 
   - 
