@@ -20,7 +20,7 @@ public class EnemyMovement : MonoBehaviour
     public float rotationSpeed = 10f;
     public float maxRotationAngle = 30f;
 
-    //public CarChangingController carChangingController;
+    public CarChangingController carChangingController;
 
     //TestForeward testForeward = new TestForeward(); // create an instance of TestForeward
     //float carSpeed = testForeward.speed; // access the speed property using the instance
@@ -30,15 +30,15 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        float mySpeed = Random.Range(20, 35);
+        float randSpeed = Random.Range(3, 6);
 
         enemy = GetComponentInChildren<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
         meshCollider = GetComponentInChildren<MeshCollider>();
 
-        enemy.speed = mySpeed;
-        enemy.acceleration = mySpeed;
+        enemy.speed = randSpeed + carChangingController.speed;
+        enemy.acceleration = randSpeed + carChangingController.speed;
         //enemy.acceleration = 1;
         hasCollided = false;
 
@@ -53,13 +53,7 @@ public class EnemyMovement : MonoBehaviour
             enemy.SetDestination(playerTarget.position);
             transform.LookAt(playerTarget);
 
-            //float yRotation = this.transform.eulerAngles.y;
-            //Quaternion newRotation = Quaternion.Euler(this.transform.eulerAngles.x, 
-            //    this.transform.eulerAngles.y, (float)(this.transform.eulerAngles.y * -1.50));
-
-            //transform.rotation = newRotation;
-
-
+            // for rotation of the cycle -> real effect
             float velocityMagnitude = rb.velocity.magnitude;
             float rotationAmount = Mathf.Clamp(velocityMagnitude / 10f, 0f, 1f) * maxRotationAngle;
 
@@ -70,11 +64,12 @@ public class EnemyMovement : MonoBehaviour
             Quaternion rotation = Quaternion.AngleAxis(turnDirection * rotationAmount, transform.forward);
             transform.rotation = rotation * transform.rotation;
 
-            //if (carChangingController.speed == 0)
-            //{
-            //    enemy.speed = 0;
-            //    enemy.acceleration = 0;
-            //}
+            // for making the cycle stop when the car stops
+            float distance = Vector3.Distance(transform.position, playerTarget.transform.position);
+            if (distance < 2 && carChangingController.speed == 0)
+            {
+                enemy.speed = 0;
+            }
 
         }
 
