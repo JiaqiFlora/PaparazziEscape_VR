@@ -5,11 +5,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class ChampagneController : MonoBehaviour
 {
-    public GameObject car;
-
     private XRGrabInteractable grabInteractable;
     private bool isGrabbing;
     private GameObject grabbedHand;
+    private XRBaseInteractor selectingInteractor;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +20,7 @@ public class ChampagneController : MonoBehaviour
 
     private void OnGrabStart()
     {
-        XRBaseInteractor selectingInteractor = (XRBaseInteractor)grabInteractable.interactorsSelecting[0];
+        selectingInteractor = (XRBaseInteractor)grabInteractable.interactorsSelecting[0];
         grabbedHand = selectingInteractor.gameObject;
 
         //GetComponent<Rigidbody>().isKinematic = false;
@@ -50,33 +49,22 @@ public class ChampagneController : MonoBehaviour
         //Debug.Log($"car velocity now: {car.GetComponent<Rigidbody>().velocity}");
         //Debug.Log($"car velocity normalized now: {car.GetComponent<Rigidbody>().velocity.normalized}");
 
+        Debug.Log($"select interactor direction: {selectingInteractor.transform.forward}");
+        Vector3 throwDirection = selectingInteractor.transform.forward;
+        GetComponent<Rigidbody>().AddForce(throwDirection * 1000f, ForceMode.Impulse);
+
         // at this moment, throttle's parent has changed to car
         if (grabbedHand != null)
         {
             //transform.position = new Vector3(grabbedHand.transform.position.x, grabbedHand.transform.position.y, grabbedHand.transform.position.z);
             grabbedHand = null;
+            selectingInteractor = null;
         }
 
         //GetComponent<Rigidbody>().isKinematic = false;
         //GetComponent<Rigidbody>().useGravity = true;
 
     }
-
-    //Update is called once per frame
-    //void Update()
-    //{
-    //    if (isGrabbing)
-    //    {
-    //        if (throttle.interactorsSelecting.Count > 0)
-    //        {
-    //            XRBaseInteractor selectingInteractor = (XRBaseInteractor)throttle.interactorsSelecting[0];
-    //            // when grabbing, update throttle object position to be the same world position with hand(interactor)
-    //            transform.position = new Vector3(selectingInteractor.transform.position.x, transform.position.y, selectingInteractor.transform.position.z);
-
-    //            PinToClosestPointThroughPath();
-    //        }
-    //    }
-    //}
 
     private void LateUpdate()
     {
