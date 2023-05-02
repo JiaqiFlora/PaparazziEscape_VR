@@ -34,15 +34,16 @@ public class CarItemSpaceRectifier : MonoBehaviour
     {
         isGrabbing = false;
 
-        GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<Rigidbody>().useGravity = true;
-
         // at this moment, throttle's parent has changed to car
         if (grabbedHand != null)
         {
-            //transform.position = new Vector3(grabbedHand.transform.position.x, grabbedHand.transform.position.y, grabbedHand.transform.position.z);
+            transform.position = new Vector3(grabbedHand.transform.position.x, grabbedHand.transform.position.y, grabbedHand.transform.position.z);
             grabbedHand = null;
         }
+
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Rigidbody>().useGravity = true;
+
 
     }
 
