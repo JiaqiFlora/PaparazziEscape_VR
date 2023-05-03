@@ -61,6 +61,7 @@ public class ChampagneController : MonoBehaviour
             selectingInteractor = null;
         }
 
+        Invoke("DisappearChampagne", 3f);
         //GetComponent<Rigidbody>().isKinematic = false;
         //GetComponent<Rigidbody>().useGravity = true;
 
@@ -77,6 +78,11 @@ public class ChampagneController : MonoBehaviour
                 transform.position = new Vector3(selectingInteractor.transform.position.x, selectingInteractor.transform.position.y, selectingInteractor.transform.position.z);
             }
         }
+    }
+
+    private void DisappearChampagne()
+    {
+        Destroy(this);
     }
 
 }
