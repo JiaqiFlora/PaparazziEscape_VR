@@ -5118,6 +5118,7 @@ MonoBehaviour:
   playerTarget: {fileID: 0}
   rotationSpeed: 10
   maxRotationAngle: 30
+  carChangingController: {fileID: 0}
 --- !u!195 &7308103592261646350
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5160,7 +5161,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1294058508819152814, guid: 859dbd43a947a904f8b036bf0b46207e, type: 3}
+  - {fileID: -4125471728267972529, guid: 43ca7c32b0d9998428ad6eb3ef053e0b, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

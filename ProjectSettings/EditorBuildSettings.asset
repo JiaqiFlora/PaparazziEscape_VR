@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/MainPaparazziScene.unity
+    guid: 6e94457c392a6724c97acb4d486dcf54
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 5c24b1a1d154bf34280361a769a86907,
       type: 2}
