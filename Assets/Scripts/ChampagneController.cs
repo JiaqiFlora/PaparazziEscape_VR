@@ -82,6 +82,8 @@ public class ChampagneController : MonoBehaviour
 
     private void DisappearChampagne()
     {
+        Debug.Log("champagne disappear!!");
+        this.gameObject.SetActive(false);
         Destroy(this);
     }
 
