@@ -1,40 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 
 public class CarItemSpaceRectifier : MonoBehaviour
 {
-
-    public XRGrabInteractable throttle;
-    public float minX, maxX, minZ, maxZ;
-    public GameObject car;
-    public GameObject throttleObject;
-
-    private Vector3 initialLocalPosition;
+    private XRGrabInteractable grabInteractable;
     private bool isGrabbing;
-    private Vector3 currentLocalPosition;
+    private GameObject grabbedHand;
 
     // Start is called before the first frame update
     void Start()
     {
-        initialLocalPosition = transform.localPosition;
-
-        throttle.selectEntered.AddListener((interactor) => OnGrabStart());
-        throttle.selectExited.AddListener((interactor) => OnGrabEnd());
-
-        currentLocalPosition = transform.localPosition;
-
+        grabInteractable = GetComponent<XRGrabInteractable>();
+        grabInteractable.selectEntered.AddListener((interactor) => OnGrabStart());
+        grabInteractable.selectExited.AddListener((interactor) => OnGrabEnd());
     }
 
     private void OnGrabStart()
     {
-        isGrabbing = true;
+        XRBaseInteractor selectingInteractor = (XRBaseInteractor)grabInteractable.interactorsSelecting[0];
+        grabbedHand = selectingInteractor.gameObject;
 
-        XRBaseInteractor selectingInteractor = (XRBaseInteractor)throttle.interactorsSelecting[0];
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Rigidbody>().useGravity = true;
 
-
+        if (selectingInteractor.gameObject.tag == "Player")
+        {
+            isGrabbing = true;
+        }
     }
 
     private void OnGrabEnd()
@@ -42,64 +35,44 @@ public class CarItemSpaceRectifier : MonoBehaviour
         isGrabbing = false;
 
         // at this moment, throttle's parent has changed to car
-        //Debug.Log(transform.parent);
-        currentLocalPosition = this.transform.localPosition;
+        if (grabbedHand != null)
+        {
+            transform.position = new Vector3(grabbedHand.transform.position.x, grabbedHand.transform.position.y, grabbedHand.transform.position.z);
+            grabbedHand = null;
+        }
 
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Rigidbody>().useGravity = true;
 
-        // TODO: - ganjiaqi only change x and z in the local position
-        this.transform.localPosition = currentLocalPosition;
-
-        Debug.Log($"world position of throttle is {this.transform.position}");
-        Debug.Log($"local position of throttle is {currentLocalPosition}");
 
     }
 
-    // Update is called once per frame
-    void Update()
+    //Update is called once per frame
+    //void Update()
+    //{
+    //    if (isGrabbing)
+    //    {
+    //        if (throttle.interactorsSelecting.Count > 0)
+    //        {
+    //            XRBaseInteractor selectingInteractor = (XRBaseInteractor)throttle.interactorsSelecting[0];
+    //            // when grabbing, update throttle object position to be the same world position with hand(interactor)
+    //            transform.position = new Vector3(selectingInteractor.transform.position.x, transform.position.y, selectingInteractor.transform.position.z);
+
+    //            PinToClosestPointThroughPath();
+    //        }
+    //    }
+    //}
+
+    private void LateUpdate()
     {
         if (isGrabbing)
         {
-            if (throttle.interactorsSelecting.Count > 0)
+            if (grabInteractable.interactorsSelecting.Count > 0)
             {
-                //Debug.Log("======");
-                XRBaseInteractor selectingInteractor = (XRBaseInteractor)throttle.interactorsSelecting[0];
-                //Debug.Log("!!!!!");
-                //Debug.Log(selectingInteractor);
-                //Debug.Log(throttle.transform.parent);
-                //Debug.Log(throttle.gameObject.transform.parent);
-
-
-                //localHandPosition = throttle.transform.parent.InverseTransformPoint(selectingInteractor.transform.position);
-                //localHandPosition = car.transform.InverseTransformPoint(selectingInteractor.transform.position);
-                Vector3 localHandPosition = selectingInteractor.transform.position;
-                //Debug.Log("@@@@@");
-
-                //Debug.Log(localHandPosition);
-                //Debug.Log(selectingInteractor);
-
-                //throttleObject.transform.localPosition = new Vector3(
-                //    0,
-                //    0,
-                //    0
-                //);
-
-
-
-
-
-                // TODO: - ganjiaqi, later only update its x and z position or use update
+                XRBaseInteractor selectingInteractor = (XRBaseInteractor)grabInteractable.interactorsSelecting[0];
                 // when grabbing, update throttle object position to be the same world position with hand(interactor)
-                throttleObject.transform.position = selectingInteractor.transform.position;
-
-
+                transform.position = new Vector3(selectingInteractor.transform.position.x, selectingInteractor.transform.position.y, selectingInteractor.transform.position.z);
             }
         }
-        else
-        {
-            //this.transform.localPosition = currentLocalPosition;
-        }
-
     }
-
-
 }
