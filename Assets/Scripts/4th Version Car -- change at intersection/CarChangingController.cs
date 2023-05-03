@@ -17,6 +17,8 @@ public class CarChangingController : MonoBehaviour
     public GameObject oldGear2;
     public GameObject newGear;
 
+    public GameObject canvasForSteerWheel;
+
 
     private float previousSpeed = 0f;
     private TrackTreeNode curPathTreeNode;
@@ -72,6 +74,16 @@ public class CarChangingController : MonoBehaviour
                 return;
             }
         }
+
+        // if user gonna reach to the end of the road, and there are two child roads of current road, show ui tip!!!!
+        if(distanceTravelled >= curPathCreator.path.length * 0.8 && curPathTreeNode.left != null && curPathTreeNode.right != null)
+        {
+            canvasForSteerWheel.SetActive(true);
+        } else
+        {
+            canvasForSteerWheel.SetActive(false);
+        }
+       
 
         // reach to the end!
         if (distanceTravelled >= curPathCreator.path.length)
