@@ -21,9 +21,6 @@ public class CarItemSpaceRectifier : MonoBehaviour
         XRBaseInteractor selectingInteractor = (XRBaseInteractor)grabInteractable.interactorsSelecting[0];
         grabbedHand = selectingInteractor.gameObject;
 
-        GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<Rigidbody>().useGravity = true;
-
         if (selectingInteractor.gameObject.tag == "Player")
         {
             isGrabbing = true;
@@ -41,27 +38,8 @@ public class CarItemSpaceRectifier : MonoBehaviour
             grabbedHand = null;
         }
 
-        GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<Rigidbody>().useGravity = true;
-
 
     }
-
-    //Update is called once per frame
-    //void Update()
-    //{
-    //    if (isGrabbing)
-    //    {
-    //        if (throttle.interactorsSelecting.Count > 0)
-    //        {
-    //            XRBaseInteractor selectingInteractor = (XRBaseInteractor)throttle.interactorsSelecting[0];
-    //            // when grabbing, update throttle object position to be the same world position with hand(interactor)
-    //            transform.position = new Vector3(selectingInteractor.transform.position.x, transform.position.y, selectingInteractor.transform.position.z);
-
-    //            PinToClosestPointThroughPath();
-    //        }
-    //    }
-    //}
 
     private void LateUpdate()
     {

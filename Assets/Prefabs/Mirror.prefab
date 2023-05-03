@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1177064557
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1177064558}
+  m_Layer: 7
+  m_Name: attach transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1177064558
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177064557}
+  m_LocalRotation: {x: 0.019499205, y: 0.7111423, z: -0.70212495, w: -0.030282546}
+  m_LocalPosition: {x: 0.078, y: -0.074, z: 0.318}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9137662731534333528}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 85.9, y: 260.16998, z: 79.296}
 --- !u!1 &872343726709896529
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +43,8 @@ GameObject:
   - component: {fileID: 4950826002565922433}
   - component: {fileID: 31769121510635620}
   - component: {fileID: 6940331593138452781}
-  m_Layer: 0
+  - component: {fileID: 8906635614787127246}
+  m_Layer: 7
   m_Name: Mirror
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,18 +58,19 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872343726709896529}
-  m_LocalRotation: {x: -0.4459946, y: -0.5287914, z: 0.46610656, w: -0.5515552}
+  m_LocalRotation: {x: 0.44599456, y: 0.52879256, z: -0.46611017, w: 0.55155116}
   m_LocalPosition: {x: -0.7856079, y: 2.7144277, z: -2.3956146}
-  m_LocalScale: {x: 0.8699404, y: 0.86994034, z: 0.8699402}
+  m_LocalScale: {x: 1.0895728, y: 1.089573, z: 1.0895728}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1533658653288273059}
   - {fileID: 1389362538960447639}
   - {fileID: 4734243517621294287}
   - {fileID: 6700707762985456512}
+  - {fileID: 1177064558}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 80.04, y: -71.127, z: -14.221}
+  m_LocalEulerAnglesHint: {x: 80.04, y: 75.627, z: -14.221}
 --- !u!65 &4950826002565922433
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -145,7 +178,7 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 1177064558}
   m_AttachEaseInTime: 0.15
   m_MovementType: 2
   m_VelocityDamping: 1
@@ -160,7 +193,7 @@ MonoBehaviour:
   m_SmoothRotation: 0
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
-  m_ThrowOnDetach: 1
+  m_ThrowOnDetach: 0
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -182,6 +215,18 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
   m_AttachPointCompatibilityMode: 0
+--- !u!114 &8906635614787127246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872343726709896529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba3438274d4c3d846bc31f7ec367886a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4449775084495941971
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,7 +240,7 @@ GameObject:
   - component: {fileID: 8808639699786608823}
   - component: {fileID: 3388359077667088220}
   - component: {fileID: 8464538102053939230}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mirror Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +372,7 @@ GameObject:
   - component: {fileID: 555698020988861559}
   - component: {fileID: 8617852405099548059}
   - component: {fileID: 497844501510069966}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: casing1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,7 +470,7 @@ GameObject:
   - component: {fileID: 424054853305929451}
   - component: {fileID: 2522358659947482993}
   - component: {fileID: 4891702181978565750}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -522,7 +567,7 @@ GameObject:
   - component: {fileID: 4734243517621294287}
   - component: {fileID: 1066390940284244733}
   - component: {fileID: 1068397510193097748}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
