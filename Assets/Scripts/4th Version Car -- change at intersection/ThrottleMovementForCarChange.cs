@@ -14,7 +14,7 @@ public class ThrottleMovementForCarChange : MonoBehaviour
         switch (other.tag)
         {
             case "gear0":
-                carChangingController.speed = -100.0f;
+                carChangingController.speed = -25.0f;
                 Debug.Log("reach to gear0");
                 break;
             case "gear1":
@@ -22,19 +22,19 @@ public class ThrottleMovementForCarChange : MonoBehaviour
                 Debug.Log("reach to gear1");
                 break;
             case "gear2":
-                carChangingController.speed = 50f;
+                carChangingController.speed = 20f;
                 Debug.Log("reach to gear2");
                 break;
             case "gear3":
-                carChangingController.speed = 100f;
+                carChangingController.speed = 40f;
                 Debug.Log("reach to gear3");
                 break;
             case "gear4":
-                carChangingController.speed = 200f;
+                carChangingController.speed = 60f;
                 Debug.Log("reach to gear4");
                 break;
             case "gear5":
-                carChangingController.speed = 500f;
+                carChangingController.speed = 90f;
                 Debug.Log("reach to gear5");
                 break;
             default:

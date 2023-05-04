@@ -7,7 +7,7 @@ public class CarChangingController : MonoBehaviour
 {
     // for car driving
     public float distanceTravelled;
-    public float speed = 0f; // added static here to access from other scripts - Hadi
+    public float speed = 0f; 
     public bool isBrake = false;
 
     // for component animation

@@ -22,6 +22,7 @@ public class EnemyMovement : MonoBehaviour
 
     public CarChangingController carChangingController;
 
+    private float randSpeed;
     //TestForeward testForeward = new TestForeward(); // create an instance of TestForeward
     //float carSpeed = testForeward.speed; // access the speed property using the instance
 
@@ -30,15 +31,15 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        float randSpeed = Random.Range(3, 6);
+        randSpeed = Random.Range(5, 12);
 
         enemy = GetComponentInChildren<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
         meshCollider = GetComponentInChildren<MeshCollider>();
 
-        enemy.speed = randSpeed + carChangingController.speed;
-        enemy.acceleration = randSpeed + carChangingController.speed;
+        //enemy.speed = randSpeed + carChangingController.speed;
+        //enemy.acceleration = randSpeed + carChangingController.speed;
         //enemy.acceleration = 1;
         hasCollided = false;
 
@@ -52,6 +53,10 @@ public class EnemyMovement : MonoBehaviour
         {
             enemy.SetDestination(playerTarget.position);
             transform.LookAt(playerTarget);
+
+            // for speed 
+            enemy.speed = randSpeed + carChangingController.speed;
+            enemy.acceleration = randSpeed + carChangingController.speed;
 
             // for rotation of the cycle -> real effect
             float velocityMagnitude = rb.velocity.magnitude;

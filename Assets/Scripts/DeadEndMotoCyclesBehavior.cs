@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class DeadEndMotoCyclesBehavior : MonoBehaviour
 {
     public GameObject car;
+    public float distanceToMove;
 
     private NavMeshAgent enemyNavMesh;
     private ParticleSystem flash;
@@ -30,7 +31,7 @@ public class DeadEndMotoCyclesBehavior : MonoBehaviour
     {
         distance = Vector3.Distance(transform.position, car.transform.position);
 
-        if (distance < 100)
+        if (distance < distanceToMove)
         {
             flash.Play();
             enemyNavMesh.enabled = true;
