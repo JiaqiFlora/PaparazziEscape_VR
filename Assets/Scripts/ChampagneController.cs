@@ -10,6 +10,9 @@ public class ChampagneController : MonoBehaviour
     private GameObject grabbedHand;
     private XRBaseInteractor selectingInteractor;
 
+    private Vector3 myLastPosition;
+    private float myLastTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +26,6 @@ public class ChampagneController : MonoBehaviour
         selectingInteractor = (XRBaseInteractor)grabInteractable.interactorsSelecting[0];
         grabbedHand = selectingInteractor.gameObject;
 
-        //GetComponent<Rigidbody>().isKinematic = false;
-        //GetComponent<Rigidbody>().useGravity = true;
-
         if (selectingInteractor.gameObject.tag == "Player")
         {
             isGrabbing = true;
@@ -36,22 +36,14 @@ public class ChampagneController : MonoBehaviour
     {
         isGrabbing = false;
 
-        //XRGrabInteractable interactable = this.GetComponent<XRGrabInteractable>();
-        //Debug.Log($"throw velocity: {interactable.throwVelocityScale}");
+        Vector3 velocityForHand = (transform.position - myLastPosition) / (Time.time - myLastTime);
+        Debug.Log($"my hand velocity is: {velocityForHand}");
 
-        // control by path creators, just move translate on path, no gravity no speed
-        //Debug.Log($"velocity now: {GetComponent<Rigidbody>().velocity}");
-        //Debug.Log($"velocity normalized now: {GetComponent<Rigidbody>().velocity.normalized}");
-
-        //Debug.Log($"world velocity now: {transform.TransformDirection(GetComponent<Rigidbody>().velocity)}");
-        //Debug.Log($"world velocity normalized now: {transform.TransformDirection(GetComponent<Rigidbody>().velocity).normalized}");
-
-        //Debug.Log($"car velocity now: {car.GetComponent<Rigidbody>().velocity}");
-        //Debug.Log($"car velocity normalized now: {car.GetComponent<Rigidbody>().velocity.normalized}");
-
-        Debug.Log($"select interactor direction: {selectingInteractor.transform.forward}");
         Vector3 throwDirection = selectingInteractor.transform.forward;
-        GetComponent<Rigidbody>().AddForce(throwDirection * 1000f, ForceMode.Impulse);
+        Debug.Log($"select interactor direction: {selectingInteractor.transform.forward}");
+
+        GetComponent<Rigidbody>().AddForce(velocityForHand.magnitude * throwDirection * 600f, ForceMode.Impulse);
+        //GetComponent<Rigidbody>().AddForce(throwDirection * 1000f, ForceMode.Impulse);
 
         // at this moment, throttle's parent has changed to car
         if (grabbedHand != null)
@@ -61,10 +53,7 @@ public class ChampagneController : MonoBehaviour
             selectingInteractor = null;
         }
 
-        Invoke("DisappearChampagne", 3f);
-        //GetComponent<Rigidbody>().isKinematic = false;
-        //GetComponent<Rigidbody>().useGravity = true;
-
+        Invoke("DisappearChampagne", 5f);
     }
 
     private void LateUpdate()
@@ -76,6 +65,9 @@ public class ChampagneController : MonoBehaviour
                 XRBaseInteractor selectingInteractor = (XRBaseInteractor)grabInteractable.interactorsSelecting[0];
                 // when grabbing, update throttle object position to be the same world position with hand(interactor)
                 transform.position = new Vector3(selectingInteractor.transform.position.x, selectingInteractor.transform.position.y, selectingInteractor.transform.position.z);
+
+                myLastPosition = transform.position;
+                myLastTime = Time.time;
             }
         }
     }
@@ -86,5 +78,4 @@ public class ChampagneController : MonoBehaviour
         this.gameObject.SetActive(false);
         Destroy(this);
     }
-
 }

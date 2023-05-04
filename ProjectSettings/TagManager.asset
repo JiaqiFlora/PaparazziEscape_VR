@@ -26,6 +26,8 @@ TagManager:
   - leftRot1
   - Left Hand Model
   - Right Hand Model
+  - audiofirst
+  - audiosecond
   layers:
   - Default
   - TransparentFX
