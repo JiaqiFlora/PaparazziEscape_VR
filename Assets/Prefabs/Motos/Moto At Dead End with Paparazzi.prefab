@@ -206,6 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 0}
+  distanceToMove: 60
 --- !u!1 &9199803237168509506
 GameObject:
   m_ObjectHideFlags: 0
