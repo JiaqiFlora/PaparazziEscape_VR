@@ -28,6 +28,7 @@ TagManager:
   - Right Hand Model
   - audiofirst
   - audiosecond
+  - radioCollider
   layers:
   - Default
   - TransparentFX

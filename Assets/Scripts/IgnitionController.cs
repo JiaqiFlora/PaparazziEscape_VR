@@ -6,6 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class IgnitionController : MonoBehaviour
 {
     public Animator animator;
+    public GameObject radioAnimationObject;
 
     private bool isCarStart = false;
 
@@ -17,6 +18,7 @@ public class IgnitionController : MonoBehaviour
             Debug.Log("trigger ignition, plan to active steer wheel");
 
             animator.SetTrigger("start");
+            radioAnimationObject.SetActive(true);
             isCarStart = true;
         }
     }

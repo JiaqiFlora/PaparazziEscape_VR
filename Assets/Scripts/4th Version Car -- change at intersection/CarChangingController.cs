@@ -9,15 +9,17 @@ public class CarChangingController : MonoBehaviour
     public float distanceTravelled;
     public float speed = 0f; 
     public bool isBrake = false;
+    public GameObject canvasForSteerWheel;
 
     // for component animation
+    [Header("for model animation")]
     public GameObject oldSteeringWheel;
     public GameObject newSteeringWheel;
     public GameObject oldGear1;
     public GameObject oldGear2;
     public GameObject newGear;
-
-    public GameObject canvasForSteerWheel;
+    public GameObject oldRadio;
+    public GameObject newRadio;
 
 
     private float previousSpeed = 0f;
@@ -164,6 +166,8 @@ public class CarChangingController : MonoBehaviour
         oldGear1.SetActive(false);
         oldGear2.SetActive(false);
         newGear.SetActive(true);
+        oldRadio.SetActive(false);
+        newRadio.SetActive(true);
     }
 
     public void TurnRight()

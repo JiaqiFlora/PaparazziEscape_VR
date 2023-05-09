@@ -17,26 +17,45 @@ public class RadioGrabPoint : MonoBehaviour
         grabInteractable.selectExited.AddListener((interactor) => OnGrabEnd());
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         transform.position = positionToStay.transform.position;
-        transform.rotation = positionToStay.transform.rotation;
+    }
+
+    private void LateUpdate()
+    {
+        if (isGrabbing)
+        {
+            if (grabInteractable.interactorsSelecting.Count > 0)
+            {
+                XRBaseInteractor selectingInteractor = (XRBaseInteractor)grabInteractable.interactorsSelecting[0];
+                // when grabbing, update throttle object position to be the same world position with hand(interactor)
+                transform.position = new Vector3(selectingInteractor.transform.position.x, selectingInteractor.transform.position.y, selectingInteractor.transform.position.z);
+
+            }
+        }
+
+        transform.position = positionToStay.transform.position;
     }
 
     private void OnGrabStart()
     {
-        GetComponent<Rigidbody>().isKinematic = false;
-
         XRBaseInteractor selectingInteractor = (XRBaseInteractor)grabInteractable.interactorsSelecting[0];
         if (positionToStay != null)
         {
             transform.position = positionToStay.transform.position;
-            transform.rotation = positionToStay.transform.rotation;
         }
+
+        if (selectingInteractor.gameObject.tag == "Player")
+        {
+            Debug.Log("is grabbing radio");
+            isGrabbing = true;
+        }
+
     }
 
     private void OnGrabEnd()
     {
-        GetComponent<Rigidbody>().isKinematic = true;
+        isGrabbing = false;
     }
 }
