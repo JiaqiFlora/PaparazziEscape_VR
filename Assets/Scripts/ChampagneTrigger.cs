@@ -11,6 +11,9 @@ public class ChampagneTrigger : MonoBehaviour
 
     private XRSimpleInteractable simpleInteractable;
 
+    // TODO: - ganjiaqi, for test, delete later
+    public Animator chamAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +32,9 @@ public class ChampagneTrigger : MonoBehaviour
     {
         Debug.Log("select!");
         SpawnNewChampagne();
+
+        // for new one, just for try
+        chamAnimator.SetTrigger("eject");
     }
 
     public void SpawnNewChampagne()
