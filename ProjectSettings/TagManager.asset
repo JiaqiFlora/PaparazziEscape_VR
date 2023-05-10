@@ -29,6 +29,7 @@ TagManager:
   - audiofirst
   - audiosecond
   - radioCollider
+  - motor
   layers:
   - Default
   - TransparentFX
@@ -39,7 +40,7 @@ TagManager:
   - Player
   - Interactable
   - Hide from camera
-  - 
+  - Bottle
   - 
   - 
   - 

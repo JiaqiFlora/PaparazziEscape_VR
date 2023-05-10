@@ -34,6 +34,7 @@ public class ChampagneController : MonoBehaviour
 
     private void OnGrabEnd()
     {
+
         isGrabbing = false;
 
         Vector3 velocityForHand = (transform.position - myLastPosition) / (Time.time - myLastTime);
@@ -42,6 +43,8 @@ public class ChampagneController : MonoBehaviour
         Vector3 throwDirection = selectingInteractor.transform.forward;
         Debug.Log($"select interactor direction: {selectingInteractor.transform.forward}");
 
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Rigidbody>().useGravity = true;
         GetComponent<Rigidbody>().AddForce(velocityForHand.magnitude * throwDirection * 600f, ForceMode.Impulse);
         //GetComponent<Rigidbody>().AddForce(throwDirection * 1000f, ForceMode.Impulse);
 
