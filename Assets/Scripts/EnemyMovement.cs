@@ -10,6 +10,8 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody rb;
     private BoxCollider boxCollider;
     private MeshCollider meshCollider;
+    private ParticleSystem flash;
+
 
     public Transform playerTarget;
 
@@ -19,8 +21,10 @@ public class EnemyMovement : MonoBehaviour
 
     public float rotationSpeed = 10f;
     public float maxRotationAngle = 30f;
+    public float collisionForce;
 
     public CarChangingController carChangingController;
+    public GameObject frontCarCollider;
 
     private float randSpeed;
     //TestForeward testForeward = new TestForeward(); // create an instance of TestForeward
@@ -36,12 +40,14 @@ public class EnemyMovement : MonoBehaviour
         enemy = GetComponentInChildren<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        meshCollider = GetComponentInChildren<MeshCollider>();
+        //meshCollider = GetComponentInChildren<MeshCollider>();
+        meshCollider = GetComponent<MeshCollider>();
 
         //enemy.speed = randSpeed + carChangingController.speed;
         //enemy.acceleration = randSpeed + carChangingController.speed;
         //enemy.acceleration = 1;
         hasCollided = false;
+        flash = GetComponentInChildren<ParticleSystem>();
 
         zRotation = this.transform.eulerAngles.z;
     }
@@ -58,7 +64,7 @@ public class EnemyMovement : MonoBehaviour
             enemy.speed = randSpeed + carChangingController.speed;
             enemy.acceleration = randSpeed + carChangingController.speed;
 
-            // for rotation of the cycle -> real effect
+            // for rotation of the cycle -> more realistic effect
             float velocityMagnitude = rb.velocity.magnitude;
             float rotationAmount = Mathf.Clamp(velocityMagnitude / 10f, 0f, 1f) * maxRotationAngle;
 
@@ -75,9 +81,29 @@ public class EnemyMovement : MonoBehaviour
             {
                 enemy.speed = 0;
             }
-
         }
 
+        // simultae car collision from front in case of car moving too fast
+        float distanceToFrontCollider = Vector3.Distance(transform.position, frontCarCollider.transform.position);
+        if (distanceToFrontCollider < 3)
+        {
+            hasCollided = true;
+            enemy.enabled = false;
+            //boxCollider.enabled = false;
+            //meshCollider.enabled = true;
+
+            // for collision applied force in opposite direction
+
+            Vector3 direction = transform.position - frontCarCollider.transform.position;
+            direction = direction.normalized;
+            Vector3 force = direction * collisionForce;
+            rb.AddForce(force, ForceMode.Impulse);
+
+            flash.Stop();
+
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
+            Destroy(gameObject, 7);
+        }
 
     }
 
@@ -88,8 +114,17 @@ public class EnemyMovement : MonoBehaviour
         {
             hasCollided = true;
             enemy.enabled = false;
-            boxCollider.enabled = false;
-            meshCollider.enabled = true;
+            //boxCollider.enabled = false;
+            //meshCollider.enabled = true;
+
+            // for collision applied force in opposite direction
+            //Vector3 direction = transform.position - collision.gameObject.transform.position;
+            //direction = direction.normalized;
+            //Vector3 force = direction * collisionForce;
+            //rb.AddForce(force, ForceMode.Impulse);
+
+            flash.Stop();
+
             rb.constraints = RigidbodyConstraints.FreezePositionY;
             Destroy(gameObject, 7);
         }
