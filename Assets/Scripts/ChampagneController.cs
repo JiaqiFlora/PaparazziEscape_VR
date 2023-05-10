@@ -13,6 +13,11 @@ public class ChampagneController : MonoBehaviour
     private Vector3 myLastPosition;
     private float myLastTime;
 
+    public float speed = 10f;
+    public float searchRadius = 10f;
+    private Transform target;
+    private bool flyToTarget = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,21 +37,48 @@ public class ChampagneController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(flyToTarget)
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.deltaTime * 360f);
+
+            Vector3 movement = direction * speed * Time.deltaTime;
+            transform.position += movement;
+
+            if (Vector3.Distance(transform.position, target.position) < 0.1f)
+            {
+                flyToTarget = false;
+                target = null;
+                DisappearChampagne();
+            }
+        }
+    }
+
     private void OnGrabEnd()
     {
         isGrabbing = false;
 
-        Vector3 velocityForHand = (transform.position - myLastPosition) / (Time.time - myLastTime);
-        Debug.Log($"my hand velocity is: {velocityForHand}");
+        if(FindTarget())
+        {
+            flyToTarget = true;
+        } else
+        {
+            Vector3 velocityForHand = (transform.position - myLastPosition) / (Time.time - myLastTime);
+            Debug.Log($"my hand velocity is: {velocityForHand}");
 
-        Vector3 throwDirection = selectingInteractor.transform.forward;
-        Debug.Log($"select interactor direction: {selectingInteractor.transform.forward}, magnitude{velocityForHand.magnitude}");
+            Vector3 throwDirection = selectingInteractor.transform.forward;
+            Debug.Log($"select interactor direction: {selectingInteractor.transform.forward}, magnitude{velocityForHand.magnitude}");
 
-        Debug.Log($"center mass: {GetComponent<Rigidbody>().centerOfMass}");
-        GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<Rigidbody>().useGravity = true;
-        GetComponent<Rigidbody>().AddForce(velocityForHand.magnitude * throwDirection * 600f, ForceMode.Impulse);
-        //GetComponent<Rigidbody>().AddForce(throwDirection * 1000f, ForceMode.Impulse);
+            GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<Rigidbody>().AddForce(velocityForHand.magnitude * throwDirection * 600f, ForceMode.Impulse);
+            //GetComponent<Rigidbody>().AddForce(throwDirection * 1000f, ForceMode.Impulse);
+
+            Invoke("DisappearChampagne", 5f);
+        }
 
         // at this moment, throttle's parent has changed to car
         if (grabbedHand != null)
@@ -55,8 +87,6 @@ public class ChampagneController : MonoBehaviour
             grabbedHand = null;
             selectingInteractor = null;
         }
-
-        Invoke("DisappearChampagne", 5f);
     }
 
     private void LateUpdate()
@@ -80,5 +110,33 @@ public class ChampagneController : MonoBehaviour
         Debug.Log("champagne disappear!!");
         this.gameObject.SetActive(false);
         Destroy(this);
+    }
+
+    private bool FindTarget()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, searchRadius);
+        float closestDistance = Mathf.Infinity;
+
+        foreach(Collider collider in colliders)
+        {
+            if(collider.CompareTag("motor"))
+            {
+                float distance = Vector3.Distance(transform.position, collider.transform.position);
+                if(distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    target = collider.gameObject.transform;
+                    Debug.Log($"find more closer motor can hit!!! {collider.gameObject}");
+                }
+            }
+        }
+
+        if(target != null)
+        {
+            Debug.Log($"find closest motor can hit!!! ");
+            return true;
+        }
+
+        return false;
     }
 }
