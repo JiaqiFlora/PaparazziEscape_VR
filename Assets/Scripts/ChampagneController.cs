@@ -45,7 +45,7 @@ public class ChampagneController : MonoBehaviour
         Debug.Log($"center mass: {GetComponent<Rigidbody>().centerOfMass}");
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<Rigidbody>().useGravity = true;
-        GetComponent<Rigidbody>().AddForce(velocityForHand.magnitude * throwDirection * 400f, ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddForce(velocityForHand.magnitude * throwDirection * 600f, ForceMode.Impulse);
         //GetComponent<Rigidbody>().AddForce(throwDirection * 1000f, ForceMode.Impulse);
 
         // at this moment, throttle's parent has changed to car
