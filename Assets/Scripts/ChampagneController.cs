@@ -15,6 +15,7 @@ public class ChampagneController : MonoBehaviour
 
     public float speed = 10f;
     public float searchRadius = 10f;
+    public float throwForce = 1000f;
     private Transform target;
     private bool flyToTarget = false;
 
@@ -48,7 +49,7 @@ public class ChampagneController : MonoBehaviour
             Vector3 movement = direction * speed * Time.deltaTime;
             transform.position += movement;
 
-            if (Vector3.Distance(transform.position, target.position) < 0.1f)
+            if (Vector3.Distance(transform.position, target.position) < 0.01f)
             {
                 flyToTarget = false;
                 target = null;
@@ -74,7 +75,7 @@ public class ChampagneController : MonoBehaviour
 
             GetComponent<Rigidbody>().isKinematic = false;
             GetComponent<Rigidbody>().useGravity = true;
-            GetComponent<Rigidbody>().AddForce(velocityForHand.magnitude * throwDirection * 600f, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(velocityForHand.magnitude * throwDirection * throwForce, ForceMode.Impulse);
             //GetComponent<Rigidbody>().AddForce(throwDirection * 1000f, ForceMode.Impulse);
 
             Invoke("DisappearChampagne", 5f);
