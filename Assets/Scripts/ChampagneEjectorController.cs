@@ -27,10 +27,8 @@ public class ChampagneEjectorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log($"detect, usual: {Physics.OverlapBox(detectCollider.bounds.center, detectCollider.bounds.extents, Quaternion.identity).Length}");
         if (isOpen)
         {
-            Debug.Log($"detect, open: {Physics.OverlapBox(detectCollider.bounds.center, detectCollider.bounds.extents, Quaternion.identity)[0].gameObject}");
             if(Physics.OverlapBox(detectCollider.bounds.center, detectCollider.bounds.extents, Quaternion.identity).Length <= 1)
             {
                 Debug.Log("now ejector is open and nothing here!");
