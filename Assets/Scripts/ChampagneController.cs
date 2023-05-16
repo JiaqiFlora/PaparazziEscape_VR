@@ -40,18 +40,36 @@ public class ChampagneController : MonoBehaviour
 
     private void Update()
     {
-        if(flyToTarget)
+        if (isGrabbing)
         {
-            Vector3 direction = (target.position - transform.position).normalized;
+            if (grabInteractable.interactorsSelecting.Count > 0)
+            {
+                XRBaseInteractor selectingInteractor = (XRBaseInteractor)grabInteractable.interactorsSelecting[0];
+                // when grabbing, update throttle object position to be the same world position with hand(interactor)
+                transform.position = new Vector3(selectingInteractor.transform.position.x, selectingInteractor.transform.position.y, selectingInteractor.transform.position.z);
+
+                myLastPosition = transform.position;
+                myLastTime = Time.time;
+            }
+        }
+
+        if (flyToTarget)
+        {
+            Vector3 targetCenterPosition = target.gameObject.GetComponent<MeshRenderer>().bounds.center;
+            Vector3 direction = (targetCenterPosition - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.deltaTime * 360f);
 
             Vector3 movement = direction * speed * Time.deltaTime;
             transform.position += movement;
 
-            if (Vector3.Distance(transform.position, target.position) < 0.01f)
+            if (Vector3.Distance(transform.position, targetCenterPosition) < 0.5f)
             {
                 flyToTarget = false;
+                this.gameObject.SetActive(false);
+                target.gameObject.GetComponent<EnemyMovement>().HitByBottle(direction);
+
+                Debug.Log("after call hit");
                 target = null;
                 DisappearChampagne();
             }
@@ -92,25 +110,26 @@ public class ChampagneController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (isGrabbing)
-        {
-            if (grabInteractable.interactorsSelecting.Count > 0)
-            {
-                XRBaseInteractor selectingInteractor = (XRBaseInteractor)grabInteractable.interactorsSelecting[0];
-                // when grabbing, update throttle object position to be the same world position with hand(interactor)
-                transform.position = new Vector3(selectingInteractor.transform.position.x, selectingInteractor.transform.position.y, selectingInteractor.transform.position.z);
+        //if (isGrabbing)
+        //{
+        //    if (grabInteractable.interactorsSelecting.Count > 0)
+        //    {
+        //        XRBaseInteractor selectingInteractor = (XRBaseInteractor)grabInteractable.interactorsSelecting[0];
+        //        // when grabbing, update throttle object position to be the same world position with hand(interactor)
+        //        transform.position = new Vector3(selectingInteractor.transform.position.x, selectingInteractor.transform.position.y, selectingInteractor.transform.position.z);
 
-                myLastPosition = transform.position;
-                myLastTime = Time.time;
-            }
-        }
+        //        myLastPosition = transform.position;
+        //        myLastTime = Time.time;
+        //    }
+        //}
     }
 
     private void DisappearChampagne()
     {
         Debug.Log("champagne disappear!!");
         this.gameObject.SetActive(false);
-        Destroy(this);
+        //Destroy(this);
+        DestroyImmediate(this);
     }
 
     private bool FindTarget()
@@ -123,7 +142,12 @@ public class ChampagneController : MonoBehaviour
             if(collider.CompareTag("motor"))
             {
                 float distance = Vector3.Distance(transform.position, collider.transform.position);
-                if(distance < closestDistance)
+                Vector3 direction = (collider.gameObject.transform.position - transform.position).normalized;
+                Vector3 throwDirection = selectingInteractor.transform.forward;
+                float dotRes = Vector3.Dot(direction, throwDirection);
+                float angle = Mathf.Acos(dotRes) * Mathf.Rad2Deg;
+
+                if (angle < 45f && distance < closestDistance)
                 {
                     closestDistance = distance;
                     target = collider.gameObject.transform;

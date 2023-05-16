@@ -127,8 +127,28 @@ public class EnemyMovement : MonoBehaviour
 
             rb.constraints = RigidbodyConstraints.FreezePositionY;
             Destroy(gameObject, 7);
-        }
+        } 
     }
+
+    public void HitByBottle(Vector3 direction)
+    {
+        Debug.Log("collide with champagne");
+        hasCollided = true;
+        //enemy.enabled = false;
+        GetComponentInChildren<NavMeshAgent>().enabled = false;
+
+        // for collision applied force in opposite direction
+        //Vector3 direction = transform.position - other.transform.forward;
+
+        Vector3 force = direction * collisionForce;
+        GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+
+        GetComponentInChildren<ParticleSystem>().Stop();
+
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+        Destroy(gameObject, 7);
+    }
+
 }
 
 

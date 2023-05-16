@@ -41,6 +41,5 @@ public class ChampagneTrigger : MonoBehaviour
     {
         GameObject newObj = Instantiate(chanpagnePrefab, parentTransform);
         newObj.transform.position = spawnPoint.position;
-        
     }
 }

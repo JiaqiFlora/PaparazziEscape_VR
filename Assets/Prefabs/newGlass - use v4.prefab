@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 7730898144057536585}
   m_Layer: 9
   m_Name: newGlass - use v4
-  m_TagString: Untagged
+  m_TagString: champagne
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

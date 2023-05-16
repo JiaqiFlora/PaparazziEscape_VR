@@ -30,6 +30,7 @@ TagManager:
   - audiosecond
   - radioCollider
   - motor
+  - champagne
   layers:
   - Default
   - TransparentFX

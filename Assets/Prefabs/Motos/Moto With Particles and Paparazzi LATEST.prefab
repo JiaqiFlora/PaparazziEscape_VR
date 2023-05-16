@@ -4967,7 +4967,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713932336863640484}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e5b1e3e877f370247a13bacb42268310, type: 3}
@@ -6992,7 +6992,7 @@ MonoBehaviour:
   playerTarget: {fileID: 0}
   rotationSpeed: 10
   maxRotationAngle: 30
-  collisionForce: 0
+  collisionForce: 200
   carChangingController: {fileID: 0}
   frontCarCollider: {fileID: 0}
 --- !u!195 &713932338834082284
