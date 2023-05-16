@@ -31,6 +31,8 @@ TagManager:
   - radioCollider
   - motor
   - champagne
+  - RightSideFollow
+  - LeftSideFollow
   layers:
   - Default
   - TransparentFX

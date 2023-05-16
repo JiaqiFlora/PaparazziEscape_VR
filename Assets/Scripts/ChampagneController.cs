@@ -67,7 +67,8 @@ public class ChampagneController : MonoBehaviour
             {
                 flyToTarget = false;
                 this.gameObject.SetActive(false);
-                target.gameObject.GetComponent<EnemyMovement>().HitByBottle(direction);
+                Vector3 hitDirection = (targetCenterPosition - myLastPosition).normalized;
+                target.gameObject.GetComponent<EnemyMovement>().HitByBottle(hitDirection);
 
                 Debug.Log("after call hit");
                 target = null;
