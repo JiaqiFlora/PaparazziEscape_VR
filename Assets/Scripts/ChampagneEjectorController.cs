@@ -11,6 +11,7 @@ public class ChampagneEjectorController : MonoBehaviour
     public Transform parentTransform;
     public GameObject triggerCollider;
     public BoxCollider detectCollider;
+    public AudioSource audioSource;
 
     private Animator chamAnimator;
     private XRSimpleInteractable simpleInteractable;
@@ -58,8 +59,9 @@ public class ChampagneEjectorController : MonoBehaviour
     {
         champagneModelObj.SetActive(true);
         chamAnimator.SetTrigger("eject");
-
         triggerCollider.SetActive(false);
+
+        audioSource.PlayDelayed(1.3f);
     }
 
     private void CloseEjector()
