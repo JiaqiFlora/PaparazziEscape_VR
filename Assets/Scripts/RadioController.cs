@@ -92,7 +92,7 @@ public class RadioController : MonoBehaviour
 
         Debug.Log($"grabangle: {grabAngle}, cur angle: {hingeJoint.angle}, anglediff: {angleDiff}");
 
-        if (angleDiff >= 15f)
+        if (angleDiff >= 3f)
         {
             PlayANewSong();
         }
