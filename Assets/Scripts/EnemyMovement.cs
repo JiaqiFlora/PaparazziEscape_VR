@@ -25,6 +25,7 @@ public class EnemyMovement : MonoBehaviour
 
     public CarChangingController carChangingController;
     public GameObject frontCarCollider;
+    public AudioSource bumpAudio;
 
     private float randSpeed;
     //TestForeward testForeward = new TestForeward(); // create an instance of TestForeward
@@ -147,6 +148,9 @@ public class EnemyMovement : MonoBehaviour
 
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
         Destroy(gameObject, 7);
+
+        Debug.Log("bump audio play!!!!");
+        bumpAudio.Play();
     }
 
 }
