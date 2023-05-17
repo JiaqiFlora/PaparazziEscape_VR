@@ -12,6 +12,8 @@ public class BrekeControllerForCarChange : MonoBehaviour
     private HingeJoint hingeJoint;
     public HapticInteractable hapticInteractable;
     public XRGrabInteractable grabInteractable;
+    public AudioSource audioSource;
+
     private bool isStropped = false;
 
     //private CarFollower carFollower;
@@ -31,30 +33,17 @@ public class BrekeControllerForCarChange : MonoBehaviour
 
     private void Update()
     {
-       
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log($"trigger enter: {other}");
-        if (other.tag == "brake" && !isStropped)
+        if (other.name == "brake Collider" && !isStropped)
         {
-            Debug.Log("collide to stop");
-            carChangingController.StopTheCar();
-            isStropped = true;
-
-            hapticInteractable.TriggerHaptic(brakedHaptic);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        //Debug.Log($"trigger exit: {other}");
-        if (other.tag == "brake" && isStropped)
+            TriggerBrake();
+        } else if(other.name == "recover break collider" && isStropped)
         {
-            Debug.Log("exit collide to restart the car");
-            carChangingController.RestartCar();
-            isStropped = false;
+            RecoverBrake();
         }
     }
 
@@ -75,5 +64,22 @@ public class BrekeControllerForCarChange : MonoBehaviour
         fixedJoint.connectedBody = carObj.GetComponent<Rigidbody>();
 
         Debug.Log("brake set iskinematic to be true");
+    }
+
+    private void TriggerBrake()
+    {
+        Debug.Log("trigger to stop");
+        carChangingController.StopTheCar();
+        isStropped = true;
+
+        hapticInteractable.TriggerHaptic(brakedHaptic);
+        audioSource.Play();
+    }
+
+    private void RecoverBrake()
+    {
+        Debug.Log("exit collide to restart the car");
+        carChangingController.RestartCar();
+        isStropped = false;
     }
 }

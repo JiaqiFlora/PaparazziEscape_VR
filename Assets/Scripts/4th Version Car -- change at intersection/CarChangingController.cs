@@ -10,6 +10,7 @@ public class CarChangingController : MonoBehaviour
     public float speed = 0f; 
     public bool isBrake = false;
     public GameObject canvasForSteerWheel;
+    public AudioSource turnAudio;
 
     // for component animation
     [Header("for model animation")]
@@ -21,7 +22,7 @@ public class CarChangingController : MonoBehaviour
     public GameObject oldRadio;
     public GameObject newRadio;
 
-
+    private bool tipIsOn = false;
     private float previousSpeed = 0f;
     private TrackTreeNode curPathTreeNode;
     private PathCreator curPathCreator
@@ -57,7 +58,6 @@ public class CarChangingController : MonoBehaviour
         if (isBrake)
         {
             speed = 0f;
-            Debug.Log("is brake, return!!!");
             return;
         }
 
@@ -80,10 +80,11 @@ public class CarChangingController : MonoBehaviour
         // if user gonna reach to the end of the road, and there are two child roads of current road, show ui tip!!!!
         if(distanceTravelled >= curPathCreator.path.length * 0.8 && curPathTreeNode.left != null && curPathTreeNode.right != null)
         {
-            canvasForSteerWheel.SetActive(true);
+            TurnTipOn();
         } else
         {
             canvasForSteerWheel.SetActive(false);
+            tipIsOn = false;
         }
        
 
@@ -181,5 +182,17 @@ public class CarChangingController : MonoBehaviour
     {
         //Debug.Log("turn left!!!");
         turnLeft = true;
+    }
+
+    private void TurnTipOn()
+    {
+        if(tipIsOn)
+        {
+            return;
+        }
+
+        tipIsOn = true;
+        turnAudio.Play();
+        canvasForSteerWheel.SetActive(true);
     }
 }

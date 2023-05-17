@@ -7,12 +7,12 @@ public class IgnitionController : MonoBehaviour
 {
     public Animator animator;
     public GameObject radioAnimationObject;
+    public AudioSource audioSource;
 
     private bool isCarStart = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        // TODO: - ganjiaqi. temp, change interation and animation later!!!
         if(other.tag == "Player" && !isCarStart)
         {
             Debug.Log("trigger ignition, plan to active steer wheel");
@@ -20,6 +20,8 @@ public class IgnitionController : MonoBehaviour
             animator.SetTrigger("start");
             radioAnimationObject.SetActive(true);
             isCarStart = true;
+
+            audioSource.Play();
         }
     }
 

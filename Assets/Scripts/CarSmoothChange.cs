@@ -48,7 +48,6 @@ public class CarSmoothChange : MonoBehaviour
         if(isBrake)
         {
             speed = 0f;
-            Debug.Log("is brake, return!!!");
             return;
         }
         
