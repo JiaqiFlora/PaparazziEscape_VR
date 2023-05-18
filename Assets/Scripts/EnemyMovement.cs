@@ -28,8 +28,9 @@ public class EnemyMovement : MonoBehaviour
     public AudioSource bumpAudio;
 
     private float randSpeed;
-    //TestForeward testForeward = new TestForeward(); // create an instance of TestForeward
-    //float carSpeed = testForeward.speed; // access the speed property using the instance
+
+    // animator
+    private Animator animator;
 
 
 
@@ -51,11 +52,17 @@ public class EnemyMovement : MonoBehaviour
         flash = GetComponentInChildren<ParticleSystem>();
 
         zRotation = this.transform.eulerAngles.z;
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        // for making the cycle stop when the car stops
+        float distance = Vector3.Distance(transform.position, playerTarget.transform.position);
+
         if (!hasCollided)
         {
             enemy.SetDestination(playerTarget.position);
@@ -76,17 +83,18 @@ public class EnemyMovement : MonoBehaviour
             Quaternion rotation = Quaternion.AngleAxis(turnDirection * rotationAmount, transform.forward);
             transform.rotation = rotation * transform.rotation;
 
-            // for making the cycle stop when the car stops
-            float distance = Vector3.Distance(transform.position, playerTarget.transform.position);
+            
             if (distance < 2 && carChangingController.speed == 0)
             {
                 enemy.speed = 0;
             }
+
+           
         }
 
         // simultae car collision from front in case of car moving too fast
         float distanceToFrontCollider = Vector3.Distance(transform.position, frontCarCollider.transform.position);
-        if (distanceToFrontCollider < 3)
+        if (distanceToFrontCollider < 2)
         {
             hasCollided = true;
             enemy.enabled = false;
@@ -106,6 +114,19 @@ public class EnemyMovement : MonoBehaviour
             Destroy(gameObject, 7);
         }
 
+        // make the papparazi animate based on the object it is following
+        if (playerTarget.tag == "RightSideFollow" && distance < 10)
+        {
+            animator.SetBool("TurnLeft", true);
+        }
+        else animator.SetBool("TurnLeft", false);
+        if (playerTarget.tag == "LeftSideFollow" && distance < 10)
+        {
+            animator.SetBool("TurnRight", true); 
+        }
+        else animator.SetBool("TurnRight", false);
+
+
     }
 
 
@@ -115,20 +136,13 @@ public class EnemyMovement : MonoBehaviour
         {
             hasCollided = true;
             enemy.enabled = false;
-            //boxCollider.enabled = false;
-            //meshCollider.enabled = true;
-
-            // for collision applied force in opposite direction
-            //Vector3 direction = transform.position - collision.gameObject.transform.position;
-            //direction = direction.normalized;
-            //Vector3 force = direction * collisionForce;
-            //rb.AddForce(force, ForceMode.Impulse);
+           
 
             flash.Stop();
 
             rb.constraints = RigidbodyConstraints.FreezePositionY;
             Destroy(gameObject, 7);
-        } 
+        }
     }
 
     public void HitByBottle(Vector3 direction)
@@ -152,7 +166,6 @@ public class EnemyMovement : MonoBehaviour
         Debug.Log("bump audio play!!!!");
         bumpAudio.Play();
     }
-
 }
 
 

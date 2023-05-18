@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3889348054879598462
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3877808947265491594, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: m_Name
+      value: Moto With Particles and Paparazzi LATEST
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491603, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491603, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 53.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491603, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1347351
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491603, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 353.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491603, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491603, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491603, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491603, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491603, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491603, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491603, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491605, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: playerTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491605, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: frontCarCollider
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877808947265491605, guid: b9423c869e76bc9419307ecba71a5185,
+        type: 3}
+      propertyPath: carChangingController
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b9423c869e76bc9419307ecba71a5185, type: 3}
