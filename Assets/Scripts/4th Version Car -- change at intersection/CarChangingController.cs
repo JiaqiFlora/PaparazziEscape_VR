@@ -195,4 +195,11 @@ public class CarChangingController : MonoBehaviour
         turnAudio.Play();
         canvasForSteerWheel.SetActive(true);
     }
+
+    public void HitEndBillboard()
+    {
+        speed = 0;
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Rigidbody>().useGravity = true;
+    }
 }

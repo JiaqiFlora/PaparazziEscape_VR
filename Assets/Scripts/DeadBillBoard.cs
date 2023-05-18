@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class DeadBillBoard : MonoBehaviour
 {
+    public CarChangingController changingController;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Car")
         {
             Debug.Log("trigger dead billboard!");
+            changingController.HitEndBillboard();
         }
     }
 
