@@ -198,8 +198,8 @@ public class CarChangingController : MonoBehaviour
 
     public void HitEndBillboard()
     {
-        speed = 0;
-        GetComponent<Rigidbody>().isKinematic = false;
+        StopTheCar();
         GetComponent<Rigidbody>().useGravity = true;
+        GetComponent<Rigidbody>().isKinematic = false;
     }
 }

@@ -6,20 +6,18 @@ public class DeadBillBoard : MonoBehaviour
 {
     public CarChangingController changingController;
 
+    private bool isDead = false;
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Car")
+        if(other.tag == "Car" && !isDead)
         {
+            Debug.Log(other.name);
+            isDead = true;
+
             Debug.Log("trigger dead billboard!");
             changingController.HitEndBillboard();
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Car")
-        {
-            Debug.Log("collide dead billboard!");
+            FadeScreen.instance.FadeOut(3f);
         }
     }
 }
