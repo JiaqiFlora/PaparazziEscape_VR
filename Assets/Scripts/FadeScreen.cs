@@ -9,6 +9,9 @@ public class FadeScreen : MonoBehaviour
     public bool fadeOnStart = true;
     public float fadeDuration = 2;
     public Color fadeColor;
+    public GameObject placeHolder;
+    //public GameObject falshes;
+    public List<ParticleSystem> flashes;
 
     private Renderer rend;
 
@@ -33,6 +36,14 @@ public class FadeScreen : MonoBehaviour
         {
             FadeIn();
         }
+
+        foreach (ParticleSystem particleSystem in flashes)
+        {
+            particleSystem.Stop();
+        }
+
+        // TODO: - ganjiaqi temp logic! fix it later!!
+        Invoke("TempStopParticle", 3f);
     }
 
 
@@ -47,15 +58,15 @@ public class FadeScreen : MonoBehaviour
     {
         Debug.Log("begin to fade out!!!");
         this.fadeDuration = fadeDuration;
-        Fade(0, 1);
+        Fade(0, 1, true);
     }
 
-    private void Fade(float alphaIn, float alphaOut)
+    private void Fade(float alphaIn, float alphaOut, bool fadeout = false)
     {
-        StartCoroutine(FadeRoutine(alphaIn, alphaOut));
+        StartCoroutine(FadeRoutine(alphaIn, alphaOut, fadeout));
     }
 
-    private IEnumerator FadeRoutine(float alphaIn, float alphaOut)
+    private IEnumerator FadeRoutine(float alphaIn, float alphaOut, bool fadeout = false)
     {
         float timer = 0;
         while (timer <= fadeDuration)
@@ -73,5 +84,28 @@ public class FadeScreen : MonoBehaviour
         newColor2.a = alphaOut;
 
         rend.material.color = newColor2;
+
+        if(fadeout)
+        {
+            // TODO: - ganjiaiq arrange them!!
+            placeHolder.SetActive(true);
+            foreach (ParticleSystem particleSystem in flashes)
+            {
+                particleSystem.Play();
+            }
+        }
+    }
+
+    public void EndingScreen(float fadeDuration = 2f)
+    {
+        FadeOut(fadeDuration);
+    }
+
+    private void TempStopParticle()
+    {
+        foreach (ParticleSystem particleSystem in flashes)
+        {
+            particleSystem.Stop();
+        }
     }
 }

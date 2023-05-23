@@ -17,7 +17,7 @@ public class DeadBillBoard : MonoBehaviour
 
             Debug.Log("trigger dead billboard!");
             changingController.HitEndBillboard();
-            FadeScreen.instance.FadeOut(3f);
+            FadeScreen.instance.FadeOut(0.1f);
         }
     }
 }

@@ -11,6 +11,7 @@ public class CarChangingController : MonoBehaviour
     public bool isBrake = false;
     public GameObject canvasForSteerWheel;
     public AudioSource turnAudio;
+    public float collisionForce;
 
     // for component animation
     [Header("for model animation")]
@@ -199,7 +200,25 @@ public class CarChangingController : MonoBehaviour
     public void HitEndBillboard()
     {
         StopTheCar();
+        //speed = 0;
+        //StartCoroutine(CrashRoutine());
         GetComponent<Rigidbody>().useGravity = true;
         GetComponent<Rigidbody>().isKinematic = false;
+
+        //Vector3 flyDirection = (-transform.forward + transform.up).normalized;
+        Vector3 flyDirection = -transform.forward;
+        Vector3 force = flyDirection * collisionForce;
+        GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+    }
+
+    private IEnumerator CrashRoutine()
+    {
+        float timer = 0;
+        while (timer <= FadeScreen.instance.fadeDuration)
+        {
+            speed -= 1;
+            yield return null;
+        }
     }
 }
