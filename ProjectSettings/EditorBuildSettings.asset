@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainPaparazziScene.unity
     guid: 6e94457c392a6724c97acb4d486dcf54
+  - enabled: 1
+    path: Assets/Scenes/VideoScene.unity
+    guid: e303a386b62b8b04a9c3c9b368ab48c7
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 5c24b1a1d154bf34280361a769a86907,
       type: 2}
