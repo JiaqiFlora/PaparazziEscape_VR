@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FadeScreen : MonoBehaviour
 {
@@ -9,9 +10,6 @@ public class FadeScreen : MonoBehaviour
     public bool fadeOnStart = true;
     public float fadeDuration = 2;
     public Color fadeColor;
-    public GameObject placeHolder;
-    //public GameObject falshes;
-    public List<ParticleSystem> flashes;
 
     private Renderer rend;
 
@@ -37,13 +35,13 @@ public class FadeScreen : MonoBehaviour
             FadeIn();
         }
 
-        foreach (ParticleSystem particleSystem in flashes)
-        {
-            particleSystem.Stop();
-        }
+        //foreach (ParticleSystem particleSystem in flashes)
+        //{
+        //    particleSystem.Stop();
+        //}
 
-        // TODO: - ganjiaqi temp logic! fix it later!!
-        Invoke("TempStopParticle", 3f);
+        //// TODO: - ganjiaqi temp logic! fix it later!!
+        //Invoke("TempStopParticle", 3f);
     }
 
 
@@ -54,19 +52,19 @@ public class FadeScreen : MonoBehaviour
         Fade(1, 0);
     }
 
-    public void FadeOut(float fadeDuration = 2f)
+    public void FadeOut(float fadeDuration = 2f, bool isEnd = false)
     {
         Debug.Log("begin to fade out!!!");
         this.fadeDuration = fadeDuration;
-        Fade(0, 1, true);
+        Fade(0, 1, isEnd);
     }
 
-    private void Fade(float alphaIn, float alphaOut, bool fadeout = false)
+    private void Fade(float alphaIn, float alphaOut, bool isEnd = false)
     {
-        StartCoroutine(FadeRoutine(alphaIn, alphaOut, fadeout));
+        StartCoroutine(FadeRoutine(alphaIn, alphaOut, isEnd));
     }
 
-    private IEnumerator FadeRoutine(float alphaIn, float alphaOut, bool fadeout = false)
+    private IEnumerator FadeRoutine(float alphaIn, float alphaOut, bool isEnd = false)
     {
         float timer = 0;
         while (timer <= fadeDuration)
@@ -85,27 +83,24 @@ public class FadeScreen : MonoBehaviour
 
         rend.material.color = newColor2;
 
-        if(fadeout)
+        if(isEnd)
         {
-            // TODO: - ganjiaiq arrange them!!
-            placeHolder.SetActive(true);
-            foreach (ParticleSystem particleSystem in flashes)
+            int currentIndex = SceneManager.GetActiveScene().buildIndex;
+            int nextIndex = currentIndex + 1;
+            Debug.Log($"current index: {currentIndex}");
+            Debug.Log($"next index: {nextIndex}");
+            Debug.Log($"is it in range? {nextIndex < SceneManager.sceneCountInBuildSettings}");
+            if (nextIndex < SceneManager.sceneCountInBuildSettings)
             {
-                particleSystem.Play();
+                Debug.Log("load to next scene!!!");
+                SceneManager.LoadScene(nextIndex);
+
             }
         }
     }
 
     public void EndingScreen(float fadeDuration = 2f)
     {
-        FadeOut(fadeDuration);
-    }
-
-    private void TempStopParticle()
-    {
-        foreach (ParticleSystem particleSystem in flashes)
-        {
-            particleSystem.Stop();
-        }
+        FadeOut(fadeDuration, true);
     }
 }

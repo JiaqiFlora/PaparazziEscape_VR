@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DeadBillBoard : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class DeadBillBoard : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // TODO: - ganjiaqi. try to use distance to control dead!!! more accurate
         if(other.tag == "Car" && !isDead)
         {
             Debug.Log(other.name);
@@ -17,7 +19,8 @@ public class DeadBillBoard : MonoBehaviour
 
             Debug.Log("trigger dead billboard!");
             changingController.HitEndBillboard();
-            FadeScreen.instance.FadeOut(0.1f);
+
+            FadeScreen.instance.EndingScreen(2f);
         }
     }
 }
