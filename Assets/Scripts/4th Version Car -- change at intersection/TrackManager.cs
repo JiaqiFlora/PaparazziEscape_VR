@@ -74,9 +74,40 @@ public class TrackManager : MonoBehaviour
 
         treeNodeLists[5].parent = treeNodeLists[4];
 
+        treeNodeLists[6].left = treeNodeLists[7];
+        treeNodeLists[6].right = treeNodeLists[8];
         treeNodeLists[6].parent = treeNodeLists[4];
 
-        pathTreeRoot = treeNodeLists[0];
+        treeNodeLists[7].left = treeNodeLists[9];
+        treeNodeLists[7].right = treeNodeLists[10];
+        treeNodeLists[7].parent = treeNodeLists[6];
+
+        treeNodeLists[8].left = treeNodeLists[11];
+        treeNodeLists[8].right = treeNodeLists[12];
+        treeNodeLists[8].parent = treeNodeLists[6];
+
+        treeNodeLists[9].parent = treeNodeLists[7];
+
+        treeNodeLists[10].left = treeNodeLists[13];
+        treeNodeLists[10].right = treeNodeLists[14];
+        treeNodeLists[10].parent = treeNodeLists[7];
+
+        treeNodeLists[11].left = treeNodeLists[15];
+        treeNodeLists[11].right = treeNodeLists[16];
+        treeNodeLists[11].parent = treeNodeLists[8];
+
+        treeNodeLists[12].parent = treeNodeLists[8];
+
+        treeNodeLists[13].parent = treeNodeLists[10];
+
+        treeNodeLists[14].parent = treeNodeLists[10];
+
+        treeNodeLists[15].parent = treeNodeLists[11];
+
+        treeNodeLists[16].parent = treeNodeLists[11];
+
+        // now, start from the middle of the map!
+        pathTreeRoot = treeNodeLists[6];
 
     }
 
