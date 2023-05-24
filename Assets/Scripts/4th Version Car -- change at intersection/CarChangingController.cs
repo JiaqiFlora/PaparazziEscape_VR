@@ -199,17 +199,22 @@ public class CarChangingController : MonoBehaviour
 
     public void HitEndBillboard()
     {
-        StopTheCar();
-        //speed = 0;
-        //StartCoroutine(CrashRoutine());
-        GetComponent<Rigidbody>().useGravity = true;
-        GetComponent<Rigidbody>().isKinematic = false;
+        // v1: for fly away
+        //StopTheCar();
+        ////speed = 0;
+        ////StartCoroutine(CrashRoutine());
+        //GetComponent<Rigidbody>().useGravity = true;
+        //GetComponent<Rigidbody>().isKinematic = false;
 
-        //Vector3 flyDirection = (-transform.forward + transform.up).normalized;
-        Vector3 flyDirection = -transform.forward;
-        Vector3 force = flyDirection * collisionForce;
-        GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+        ////Vector3 flyDirection = (-transform.forward + transform.up).normalized;
+        //Vector3 flyDirection = -transform.forward;
+        //Vector3 force = flyDirection * collisionForce;
+        //GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+        //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+
+        // v2: just stop
+        // TODO: - ganjiaqi. add effect to show it is a car crash????
+        StopTheCar();
     }
 
     private IEnumerator CrashRoutine()
