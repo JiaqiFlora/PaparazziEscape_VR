@@ -9,6 +9,7 @@ public class BeginningControl : MonoBehaviour
 
     public Transform driverTransform;
     public GameObject XROrigin;
+    public bool isOver = false;
 
     private void Awake()
     {
@@ -41,5 +42,8 @@ public class BeginningControl : MonoBehaviour
         XROrigin.transform.rotation = driverTransform.rotation;
 
         FadeScreen.instance.FadeIn(2.5f);
+
+        yield return new WaitForSeconds(3f);
+        isOver = true;
     }
 }

@@ -22,6 +22,7 @@ public class CarChangingController : MonoBehaviour
     public GameObject newGear;
     public GameObject oldRadio;
     public GameObject newRadio;
+    public GameObject brakeObject;
 
     private bool tipIsOn = false;
     private float previousSpeed = 0f;
@@ -36,6 +37,7 @@ public class CarChangingController : MonoBehaviour
   
     
     private bool turnLeft = true; // true for left, false for right
+    private bool planToEnd = false;
 
     // Start is called before the first frame update
     void Start()
@@ -92,7 +94,15 @@ public class CarChangingController : MonoBehaviour
         // reach to the end!
         if (distanceTravelled >= curPathCreator.path.length)
         {
-            if((curPathTreeNode.left == null && curPathTreeNode.right == null))
+            // here to deal with the end of game thing!
+            // TODO: - ganjiaqi consider a better place to put this & decide 
+            if (planToEnd)
+            {
+                HitEndBillboard();
+                return;
+            }
+
+            if ((curPathTreeNode.left == null && curPathTreeNode.right == null))
             {
                 Debug.Log("no way");
                 distanceTravelled = curPathCreator.path.length;
@@ -200,21 +210,39 @@ public class CarChangingController : MonoBehaviour
     public void HitEndBillboard()
     {
         // v1: for fly away
-        //StopTheCar();
-        ////speed = 0;
-        ////StartCoroutine(CrashRoutine());
-        //GetComponent<Rigidbody>().useGravity = true;
-        //GetComponent<Rigidbody>().isKinematic = false;
+        StopTheCar();
+        //speed = 0;
+        //StartCoroutine(CrashRoutine());
+        GetComponent<Rigidbody>().useGravity = true;
+        GetComponent<Rigidbody>().isKinematic = false;
 
-        ////Vector3 flyDirection = (-transform.forward + transform.up).normalized;
-        //Vector3 flyDirection = -transform.forward;
-        //Vector3 force = flyDirection * collisionForce;
-        //GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
-        //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+        //Vector3 flyDirection = (-transform.forward + transform.up).normalized;
+        Vector3 flyDirection = -transform.forward;
+        Vector3 force = flyDirection * collisionForce;
+        GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+
+        FadeScreen.instance.EndingScreen(3f);
 
         // v2: just stop
         // TODO: - ganjiaqi. add effect to show it is a car crash????
-        StopTheCar();
+        //StopTheCar();
+        //MotoManager.instance.SpawnMotorcycleAtEnd(false);
+    }
+
+
+    public void PlanToHitBillBoard()
+    {
+        // stop till the end of the road.
+        planToEnd = true;
+
+        // here to change the speed and disable thottle and brake
+        if(speed < 60)
+        {
+            speed = 60;
+        }
+        newGear.SetActive(false);
+        brakeObject.SetActive(false);
     }
 
     private IEnumerator CrashRoutine()

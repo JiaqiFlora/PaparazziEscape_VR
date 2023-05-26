@@ -108,6 +108,7 @@ public class TrackManager : MonoBehaviour
 
         // now, start from the middle of the map!
         pathTreeRoot = treeNodeLists[6];
+        //pathTreeRoot = treeNodeLists[0];
 
     }
 

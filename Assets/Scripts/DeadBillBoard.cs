@@ -7,20 +7,44 @@ public class DeadBillBoard : MonoBehaviour
 {
     public CarChangingController changingController;
 
+    private Animator animator;
     private bool isDead = false;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
+        // version 1
         // TODO: - ganjiaqi. try to use distance to control dead!!! more accurate
-        if(other.tag == "Car" && !isDead)
+        //if(other.tag == "Car" && !isDead)
+        //{
+        //    Debug.Log(other.name);
+        //    isDead = true;
+
+        //    Debug.Log("trigger dead billboard!");
+        //    changingController.HitEndBillboard();
+
+        //    FadeScreen.instance.EndingScreen(4f);
+        //}
+
+
+        // version2. collider move forward and add animation
+        if (other.tag == "Car" && !isDead)
         {
             Debug.Log(other.name);
             isDead = true;
 
             Debug.Log("trigger dead billboard!");
-            changingController.HitEndBillboard();
+            animator.SetTrigger("fall");
 
-            FadeScreen.instance.EndingScreen(4f);
+            changingController.PlanToHitBillBoard();
+
+            //changingController.HitEndBillboard();
+            //FadeScreen.instance.EndingScreen(4f);
         }
+
     }
 }

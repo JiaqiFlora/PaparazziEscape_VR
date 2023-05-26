@@ -14,7 +14,7 @@ public class ChampagneController : MonoBehaviour
     private float myLastTime;
 
     public float speed = 10f;
-    public float searchRadius = 10f;
+    public float searchRadius = 20f;
     public float throwForce = 1000f;
     private Transform target;
     private bool flyToTarget = false;
@@ -128,9 +128,11 @@ public class ChampagneController : MonoBehaviour
     private void DisappearChampagne()
     {
         Debug.Log("champagne disappear!!");
+        this.gameObject.transform.SetParent(null);
         this.gameObject.SetActive(false);
-        //Destroy(this);
         DestroyImmediate(this);
+        Destroy(this);
+        DestroyObject(this);
     }
 
     private bool FindTarget()
@@ -140,7 +142,7 @@ public class ChampagneController : MonoBehaviour
 
         foreach(Collider collider in colliders)
         {
-            if(collider.CompareTag("motor"))
+            if(collider.CompareTag("motor") || collider.CompareTag("Moto"))
             {
                 float distance = Vector3.Distance(transform.position, collider.transform.position);
                 Vector3 direction = (collider.gameObject.transform.position - transform.position).normalized;

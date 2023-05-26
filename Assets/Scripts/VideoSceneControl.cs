@@ -22,8 +22,9 @@ public class VideoSceneControl : MonoBehaviour
 
     IEnumerator StartEndingVideo()
     {
-        //FadeScreen.instance.FadeIn(3f);
-        yield return new WaitForSeconds(2f);
+        FadeScreen.instance.FadeIn(4f);
+        //yield return new WaitForSeconds(1f);
+        yield return null;
         videoPlayer.Play();
     }
 }

@@ -11,55 +11,45 @@ public class EnemyMovement : MonoBehaviour
     private BoxCollider boxCollider;
     private MeshCollider meshCollider;
     private ParticleSystem flash;
-
-
-    public Transform playerTarget;
-
+    private float randSpeed;
+    private Animator animator;
     private bool hasCollided;
-
     private double zRotation;
+    private CarChangingController carChangingController;
 
+    // sorry Hadi, change here to public, I want to try collisionForce outside.
+    public float collisionForce = 20f;
+    public Transform playerTarget;
     public float rotationSpeed = 10f;
     public float maxRotationAngle = 30f;
-    public float collisionForce;
-
-    public CarChangingController carChangingController;
     public GameObject frontCarCollider;
     public AudioSource bumpAudio;
-
-    private float randSpeed;
-
-    // animator
-    private Animator animator;
-
 
 
     // Start is called before the first frame update
     void Start()
     {
-        randSpeed = Random.Range(5, 12);
+        int randomToFollow = Random.Range(0, MotoManager.instance.toFollow.Length);
+        carChangingController = MotoManager.instance.carController;
+        frontCarCollider = MotoManager.instance.frontCollider;
+        playerTarget = MotoManager.instance.toFollow[randomToFollow];
+        
+        randSpeed = Random.Range(8, 15);
 
         enemy = GetComponentInChildren<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        //meshCollider = GetComponentInChildren<MeshCollider>();
         meshCollider = GetComponent<MeshCollider>();
-
-        //enemy.speed = randSpeed + carChangingController.speed;
-        //enemy.acceleration = randSpeed + carChangingController.speed;
-        //enemy.acceleration = 1;
-        hasCollided = false;
+        animator = GetComponentInChildren<Animator>();
         flash = GetComponentInChildren<ParticleSystem>();
 
+        hasCollided = false;
         zRotation = this.transform.eulerAngles.z;
-
-        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         // for making the cycle stop when the car stops
         float distance = Vector3.Distance(transform.position, playerTarget.transform.position);
 
@@ -72,36 +62,25 @@ public class EnemyMovement : MonoBehaviour
             enemy.speed = randSpeed + carChangingController.speed;
             enemy.acceleration = randSpeed + carChangingController.speed;
 
-            // for rotation of the cycle -> more realistic effect
+            // rotaion of the motorcycke ==> SWITCHED OFF - messing with animation
             float velocityMagnitude = rb.velocity.magnitude;
             float rotationAmount = Mathf.Clamp(velocityMagnitude / 10f, 0f, 1f) * maxRotationAngle;
-
-            // Determine direction of turn
             float turnDirection = Mathf.Sign(Vector3.Cross(transform.forward, rb.velocity.normalized).y);
-
-            // Rotate motorcycle around local forward axis
             Quaternion rotation = Quaternion.AngleAxis(turnDirection * rotationAmount, transform.forward);
             transform.rotation = rotation * transform.rotation;
-
             
             if (distance < 2 && carChangingController.speed == 0)
             {
                 enemy.speed = 0;
             }
-
-           
         }
 
         // simultae car collision from front in case of car moving too fast
         float distanceToFrontCollider = Vector3.Distance(transform.position, frontCarCollider.transform.position);
-        if (distanceToFrontCollider < 2)
+        if (distanceToFrontCollider < 3f)
         {
             hasCollided = true;
             enemy.enabled = false;
-            //boxCollider.enabled = false;
-            //meshCollider.enabled = true;
-
-            // for collision applied force in opposite direction
 
             Vector3 direction = transform.position - frontCarCollider.transform.position;
             direction = direction.normalized;
@@ -111,7 +90,8 @@ public class EnemyMovement : MonoBehaviour
             flash.Stop();
 
             rb.constraints = RigidbodyConstraints.FreezePositionY;
-            Destroy(gameObject, 7);
+
+            Destroy(gameObject, 3);
         }
 
         // make the papparazi animate based on the object it is following
@@ -125,10 +105,7 @@ public class EnemyMovement : MonoBehaviour
             animator.SetBool("TurnRight", true); 
         }
         else animator.SetBool("TurnRight", false);
-
-
     }
-
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -136,12 +113,12 @@ public class EnemyMovement : MonoBehaviour
         {
             hasCollided = true;
             enemy.enabled = false;
-           
-
             flash.Stop();
-
             rb.constraints = RigidbodyConstraints.FreezePositionY;
-            Destroy(gameObject, 7);
+            MotoManager.currentMotos--;
+            Debug.Log(MotoManager.currentMotos);
+            Debug.Log("------------------");
+            Destroy(gameObject, 3);
         }
     }
 
@@ -167,99 +144,3 @@ public class EnemyMovement : MonoBehaviour
         bumpAudio.Play();
     }
 }
-
-
-
-
-
-
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.AI;
-
-//public class EnemyMovement : MonoBehaviour
-//{
-//    private NavMeshAgent enemy;
-//    private Rigidbody rb;
-//    private BoxCollider boxCollider;
-//    private MeshCollider meshCollider;
-
-//    public Transform playerTarget;
-//    public CarFollower carFollower;
-
-//    private bool hasCollided;
-
-//    private double zRotation;
-
-//    public float rotationSpeed = 10f;
-//    public float maxRotationAngle = 30f;
-
-
-//    // Start is called before the first frame update
-//    void Start()
-//    {
-//        float carSpeed = carFollower.speed;
-//        float mySpeed = Random.Range(carSpeed * 4, carSpeed * 8);
-
-//        enemy = GetComponentInChildren<NavMeshAgent>();
-//        rb = GetComponent<Rigidbody>();
-//        boxCollider = GetComponent<BoxCollider>();
-//        meshCollider = GetComponentInChildren<MeshCollider>();
-
-//        enemy.speed = mySpeed;
-//        enemy.acceleration = mySpeed;
-//        hasCollided = false;
-
-//        zRotation = this.transform.eulerAngles.z;
-//    }
-
-//    // Update is called once per frame
-//    void Update()
-//    {
-//        if (!hasCollided)
-//        {
-//            float carSpeed = carFollower.speed;
-//            float mySpeed = Random.Range(carSpeed * 1, carSpeed * 2f);
-//            enemy.speed = mySpeed;
-//            enemy.acceleration = mySpeed;
-
-//            enemy.SetDestination(playerTarget.position);
-//            transform.LookAt(playerTarget);
-
-//            //float yRotation = this.transform.eulerAngles.y;
-//            //Quaternion newRotation = Quaternion.Euler(this.transform.eulerAngles.x, 
-//            //    this.transform.eulerAngles.y, (float)(this.transform.eulerAngles.y * -1.50));
-
-//            //transform.rotation = newRotation;
-
-
-//            float velocityMagnitude = rb.velocity.magnitude;
-//            float rotationAmount = Mathf.Clamp(velocityMagnitude / 10f, 0f, 1f) * maxRotationAngle;
-
-//            // Determine direction of turn
-//            float turnDirection = Mathf.Sign(Vector3.Cross(transform.forward, rb.velocity.normalized).y);
-
-//            // Rotate motorcycle around local forward axis
-//            Quaternion rotation = Quaternion.AngleAxis(turnDirection * rotationAmount, transform.forward);
-//            transform.rotation = rotation * transform.rotation;
-
-//        }
-
-
-//    }
-
-
-//    private void OnCollisionEnter(Collision collision)
-//    {
-//        if (collision.gameObject.tag == "Car")
-//        {
-//            hasCollided = true;
-//            enemy.enabled = false;
-//            boxCollider.enabled = false;
-//            meshCollider.enabled = true;
-//            rb.constraints = RigidbodyConstraints.FreezePositionY;
-//            Destroy(gameObject, 7);
-//        }
-//    }
-//}
