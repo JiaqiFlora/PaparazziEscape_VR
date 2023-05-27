@@ -5,6 +5,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class RadioController : MonoBehaviour
 {
+    public static RadioController instance { get; private set; }
+
     public List<AudioSource> audioLists = new List<AudioSource>();
     public GameObject positionToStay;
 
@@ -15,6 +17,18 @@ public class RadioController : MonoBehaviour
 
     // TODO: - ganjiaqi just for temp demo, delete or polish later
     private int index = 0;
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -112,5 +126,10 @@ public class RadioController : MonoBehaviour
         Debug.Log($"play a new song. index is: {randomIndex}");
 
         index = randomIndex;
+    }
+
+    public void StopSongs()
+    {
+        audioLists[index].Stop();
     }
 }

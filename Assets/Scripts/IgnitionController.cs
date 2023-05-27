@@ -21,8 +21,16 @@ public class IgnitionController : MonoBehaviour
             radioAnimationObject.SetActive(true);
             isCarStart = true;
 
-            audioSource.Play();
+            StartCoroutine(IgnitionProcess());
         }
+    }
+
+    IEnumerator IgnitionProcess()
+    {
+        audioSource.Play();
+        yield return new WaitForSeconds(6f);
+
+        VirtualAudioHelper.instance.PlayVirtualAudio(0, true);
     }
 
 }

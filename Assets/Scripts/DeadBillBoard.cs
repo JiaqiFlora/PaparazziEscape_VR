@@ -40,6 +40,9 @@ public class DeadBillBoard : MonoBehaviour
             Debug.Log("trigger dead billboard!");
             animator.SetTrigger("fall");
 
+            RadioController.instance.StopSongs();
+            VirtualAudioHelper.instance.PlayVirtualAudio(4, true);
+
             changingController.PlanToHitBillBoard();
 
             //changingController.HitEndBillboard();

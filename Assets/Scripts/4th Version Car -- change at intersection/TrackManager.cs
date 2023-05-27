@@ -76,7 +76,7 @@ public class TrackManager : MonoBehaviour
 
         treeNodeLists[6].left = treeNodeLists[7];
         treeNodeLists[6].right = treeNodeLists[8];
-        treeNodeLists[6].parent = treeNodeLists[4];
+        //treeNodeLists[6].parent = treeNodeLists[4];
 
         treeNodeLists[7].left = treeNodeLists[9];
         treeNodeLists[7].right = treeNodeLists[10];

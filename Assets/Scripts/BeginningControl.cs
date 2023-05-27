@@ -9,6 +9,7 @@ public class BeginningControl : MonoBehaviour
 
     public Transform driverTransform;
     public GameObject XROrigin;
+    public GameObject winshield;
     public bool isOver = false;
 
     private void Awake()
@@ -40,6 +41,7 @@ public class BeginningControl : MonoBehaviour
         Debug.Log("change to drive seat!");
         XROrigin.transform.position = driverTransform.position;
         XROrigin.transform.rotation = driverTransform.rotation;
+        winshield.SetActive(false);
 
         FadeScreen.instance.FadeIn(2.5f);
 

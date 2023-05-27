@@ -33,6 +33,7 @@ TagManager:
   - champagne
   - RightSideFollow
   - LeftSideFollow
+  - Moto
   layers:
   - Default
   - TransparentFX
@@ -46,7 +47,7 @@ TagManager:
   - Bottle
   - PlayerModel
   - test
-  - 
+  - DrivableRoad
   - 
   - 
   - 

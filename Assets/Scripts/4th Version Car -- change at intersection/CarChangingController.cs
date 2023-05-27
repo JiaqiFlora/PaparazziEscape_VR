@@ -7,7 +7,7 @@ public class CarChangingController : MonoBehaviour
 {
     // for car driving
     public float distanceTravelled;
-    public float speed = 0f; 
+    public float speed = 0f;
     public bool isBrake = false;
     public GameObject canvasForSteerWheel;
     public AudioSource turnAudio;
@@ -24,9 +24,14 @@ public class CarChangingController : MonoBehaviour
     public GameObject newRadio;
     public GameObject brakeObject;
 
+    private float totalTime;
+    private bool driving = false;
+    private bool firstIntersection = true;
+    private bool driveFastTip = false;
     private bool tipIsOn = false;
     private float previousSpeed = 0f;
     private TrackTreeNode curPathTreeNode;
+    private bool deadEndPlayedAudio = false;
     private PathCreator curPathCreator
     {
         get
@@ -37,7 +42,7 @@ public class CarChangingController : MonoBehaviour
   
     
     private bool turnLeft = true; // true for left, false for right
-    private bool planToEnd = false;
+    private bool planToEnd = false; 
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +58,13 @@ public class CarChangingController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // first driving moment trigger tip for other accessories;
+        if(speed > 0 && !driving)
+        {
+            driving = true;
+            StartCoroutine(FirstDrivePlayAudio());
+        }
+
         if(curPathTreeNode == null)
         {
             return;
@@ -81,7 +93,7 @@ public class CarChangingController : MonoBehaviour
         }
 
         // if user gonna reach to the end of the road, and there are two child roads of current road, show ui tip!!!!
-        if(distanceTravelled >= curPathCreator.path.length * 0.8 && curPathTreeNode.left != null && curPathTreeNode.right != null)
+        if(distanceTravelled >= curPathCreator.path.length * 0.7 && curPathTreeNode.left != null && curPathTreeNode.right != null)
         {
             TurnTipOn();
         } else
@@ -95,7 +107,6 @@ public class CarChangingController : MonoBehaviour
         if (distanceTravelled >= curPathCreator.path.length)
         {
             // here to deal with the end of game thing!
-            // TODO: - ganjiaqi consider a better place to put this & decide 
             if (planToEnd)
             {
                 HitEndBillboard();
@@ -106,6 +117,11 @@ public class CarChangingController : MonoBehaviour
             {
                 Debug.Log("no way");
                 distanceTravelled = curPathCreator.path.length;
+                if(!deadEndPlayedAudio)
+                {
+                    VirtualAudioHelper.instance.PlayVirtualAudio(3);
+                    deadEndPlayedAudio = true;
+                }
                 return;
             } else if((curPathTreeNode.left != null && curPathTreeNode.right == null))
             {
@@ -131,6 +147,7 @@ public class CarChangingController : MonoBehaviour
             distanceTravelled = 0f;
         }
 
+        deadEndPlayedAudio = false;
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             TurnLeft();
@@ -149,6 +166,19 @@ public class CarChangingController : MonoBehaviour
 
         Quaternion rotationForCar = Quaternion.Euler(euler);
         transform.rotation = rotationForCar;
+
+        totalTime += Time.deltaTime;
+        TriggerDirveFastAudio();
+    }
+
+    public void TriggerDirveFastAudio()
+    {
+        if (!driveFastTip && totalTime > 120 && speed < 50)
+        {
+            Debug.Log("exceed 2 mins! speed not fast enough, trigger drive fast tip!");
+            VirtualAudioHelper.instance.PlayVirtualAudio(5);
+            driveFastTip = true;
+        }
     }
 
     public void StopTheCar()
@@ -205,6 +235,12 @@ public class CarChangingController : MonoBehaviour
         tipIsOn = true;
         turnAudio.Play();
         canvasForSteerWheel.SetActive(true);
+
+        if(firstIntersection)
+        {
+            VirtualAudioHelper.instance.PlayVirtualAudio(2);
+            firstIntersection = false;
+        }
     }
 
     public void HitEndBillboard()
@@ -237,10 +273,7 @@ public class CarChangingController : MonoBehaviour
         planToEnd = true;
 
         // here to change the speed and disable thottle and brake
-        if(speed < 60)
-        {
-            speed = 60;
-        }
+        speed = 60;
         newGear.SetActive(false);
         brakeObject.SetActive(false);
     }
@@ -253,5 +286,11 @@ public class CarChangingController : MonoBehaviour
             speed -= 1;
             yield return null;
         }
+    }
+
+    IEnumerator FirstDrivePlayAudio()
+    {
+        yield return new WaitForSeconds(3f);
+        VirtualAudioHelper.instance.PlayVirtualAudio(1, true);
     }
 }
