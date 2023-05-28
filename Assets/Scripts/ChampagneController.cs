@@ -84,6 +84,7 @@ public class ChampagneController : MonoBehaviour
         if(FindTarget())
         {
             flyToTarget = true;
+            GetComponent<TrailRenderer>().enabled = true;
         } else
         {
             Vector3 velocityForHand = (transform.position - myLastPosition) / (Time.time - myLastTime);

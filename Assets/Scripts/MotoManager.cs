@@ -16,6 +16,7 @@ public class MotoManager : MonoBehaviour
     //public GameObject MotoPrefabLeft;
     public Transform carTransform;
     public float spawnDistance = 400f;
+    public Transform[] beginningToFollow;
 
     public bool Test = false;
     private bool hasSpawned = false;
@@ -23,7 +24,6 @@ public class MotoManager : MonoBehaviour
     public int maxMotorsNum = 20;
 
     private float currentTime;
-
 
     private float addDistance = 1;
     private bool isSmaller = false;
@@ -72,10 +72,10 @@ public class MotoManager : MonoBehaviour
             maxMotorsNum = 50;
 
         if (currentTime >= 100)
-            maxMotorsNum = 70;
+            maxMotorsNum = 60;
 
         if (currentTime >= 120)
-            maxMotorsNum = 100;
+            maxMotorsNum = 70;
 
         // Testing Flora's function
         //if (Test == true && !hasSpawned)

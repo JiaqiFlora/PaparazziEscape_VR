@@ -16,6 +16,8 @@ public class EnemyMovement : MonoBehaviour
     private bool hasCollided;
     private double zRotation;
     private CarChangingController carChangingController;
+    private int randomToFollow;
+    private int randomBeginningFolow;
 
     // sorry Hadi, change here to public, I want to try collisionForce outside.
     public float collisionForce = 20f;
@@ -25,15 +27,16 @@ public class EnemyMovement : MonoBehaviour
     public GameObject frontCarCollider;
     public AudioSource bumpAudio;
 
-    private int randomToFollow;
+    public Transform beginningPlayerTarget;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        collisionForce = 0;
+
         carChangingController = MotoManager.instance.carController;
         frontCarCollider = MotoManager.instance.frontCollider;
-        playerTarget = carChangingController.gameObject.transform;
+        //playerTarget = carChangingController.gameObject.transform;
 
         randSpeed = Random.Range(15, 25);
 
@@ -47,7 +50,10 @@ public class EnemyMovement : MonoBehaviour
         hasCollided = false;
         zRotation = this.transform.eulerAngles.z;
 
+        // for beginning of the paparrazi position
+        randomBeginningFolow = Random.Range(0, MotoManager.instance.beginningToFollow.Length);
         randomToFollow = Random.Range(0, MotoManager.instance.toFollow.Length);
+        playerTarget = MotoManager.instance.beginningToFollow[randomBeginningFolow];
 
     }
 
@@ -56,7 +62,7 @@ public class EnemyMovement : MonoBehaviour
     {
         // for making the cycle stop when the car stops
         float distance = Vector3.Distance(transform.position, playerTarget.transform.position);
-
+        
         if (!hasCollided)
         {
             enemy.SetDestination(playerTarget.position);
@@ -73,18 +79,20 @@ public class EnemyMovement : MonoBehaviour
             Quaternion rotation = Quaternion.AngleAxis(turnDirection * rotationAmount, transform.forward);
             transform.rotation = rotation * transform.rotation;
             
-            if (distance < 2 && carChangingController.speed == 0)
+            if (distance < 2 && carChangingController.speed == 0 )
             {
                 enemy.speed = 0;
             }
+            if (distance < 10 && !BeginningControl.instance.isOver)
+                enemy.speed = 0;
 
             if (distance > 50 && BeginningControl.instance.isOver)
-                enemy.speed = 150;
+                enemy.speed = carChangingController.speed + 50;
         }
 
         // simultae car collision from front in case of car moving too fast
         float distanceToFrontCollider = Vector3.Distance(transform.position, frontCarCollider.transform.position);
-        if (distanceToFrontCollider < 3f)
+        if (distanceToFrontCollider < 3f && BeginningControl.instance.isOver)
         {
             hasCollided = true;
             enemy.enabled = false;
@@ -102,39 +110,25 @@ public class EnemyMovement : MonoBehaviour
         }
 
         // make the papparazi animate based on the object it is following
-        //if (BeginningControl.instance.isOver)
-        //{
-          
-        //    playerTarget = MotoManager.instance.toFollow[randomToFollow];
-
-        //    if (playerTarget.tag == "RightSideFollow" && distance < 10)
-        //    {
-        //        animator.SetBool("TurnLeft", true);
-        //    }
-        //    else animator.SetBool("TurnLeft", false);
-        //    if (playerTarget.tag == "LeftSideFollow" && distance < 10)
-        //    {
-        //        animator.SetBool("TurnRight", true);
-        //    }
-        //    else animator.SetBool("TurnRight", false);
-        //}
-
-        playerTarget = MotoManager.instance.toFollow[randomToFollow];
-
-        if (playerTarget.tag == "RightSideFollow" && distance < 10)
+        if (carChangingController.speed > 0)
         {
-            animator.SetBool("TurnLeft", true);
-        }
-        else animator.SetBool("TurnLeft", false);
-        if (playerTarget.tag == "LeftSideFollow" && distance < 10)
+            collisionForce = 100;
+            playerTarget = MotoManager.instance.toFollow[randomToFollow];
+
+            if (playerTarget.tag == "RightSideFollow" && distance < 10)
+            {
+                animator.SetBool("TurnLeft", true);
+            }
+            else animator.SetBool("TurnLeft", false);
+            if (playerTarget.tag == "LeftSideFollow" && distance < 10)
+            {
+                animator.SetBool("TurnRight", true);
+            }
+            else animator.SetBool("TurnRight", false);
+        } else
         {
-            animator.SetBool("TurnRight", true);
+            playerTarget = MotoManager.instance.beginningToFollow[randomBeginningFolow];
         }
-        else animator.SetBool("TurnRight", false);
-
-
-
-
 
     }
 

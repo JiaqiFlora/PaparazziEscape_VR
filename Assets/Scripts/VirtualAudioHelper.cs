@@ -13,6 +13,7 @@ public class VirtualAudioHelper : MonoBehaviour
     // 3: deadEnd
     // 4: fallingBill
     // 5: driveFast
+    // 6: billboard crash
     public List<AudioSource> audios;
 
     private void Awake()
@@ -27,8 +28,16 @@ public class VirtualAudioHelper : MonoBehaviour
         }
     }
 
-    public void PlayVirtualAudio(int index, bool force = false)
+    public void PlayVirtualAudio(int index, bool force = false, bool now = false)
     {
+        if(now)
+        {
+            audios[index].Play(); 
+            // TODO: - ganjiaqi make sure this logic!!!
+            isAudioOn = true;
+            return;
+        }
+
         if(isAudioOn && !force)
         {
             return;

@@ -42,6 +42,7 @@ public class DeadBillBoard : MonoBehaviour
 
             RadioController.instance.StopSongs();
             VirtualAudioHelper.instance.PlayVirtualAudio(4, true);
+            VirtualAudioHelper.instance.PlayVirtualAudio(6, true, true);
 
             changingController.PlanToHitBillBoard();
 

@@ -7,6 +7,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11544606514816489, guid: f2fbce097ebd21c4fbdba854f187f44f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11544606514816489, guid: f2fbce097ebd21c4fbdba854f187f44f,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 11544606514816491, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: bumpAudio
@@ -16,8 +26,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerTarget
       value: 
-      objectReference: {fileID: 8446999555339497525, guid: f9941604a9d3cdd47ab1801e3a92a8c5,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 11544606514816491, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: collisionForce
@@ -27,8 +36,7 @@ PrefabInstance:
         type: 3}
       propertyPath: frontCarCollider
       value: 
-      objectReference: {fileID: 6068371177256233863, guid: b882b6885aff73b4495533dca23ad6de,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 11544606514816491, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: carChangingController
@@ -43,22 +51,22 @@ PrefabInstance:
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 53.45
+      value: -595.18
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1347351
+      value: 391.49
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 353.56
+      value: -435.63
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.1690531
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
@@ -68,7 +76,7 @@ PrefabInstance:
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.98560697
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
@@ -83,17 +91,22 @@ PrefabInstance:
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -160.534
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11544606514816494, guid: f2fbce097ebd21c4fbdba854f187f44f,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 11544606514816500, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_Name
-      value: LATEST W SOUND
+      value: LATEST W SOUND (4)
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816500, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
@@ -165,6 +178,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2106518524796980579, guid: f2fbce097ebd21c4fbdba854f187f44f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 305d30449b30fd544bf14fe9cd829603, type: 2}
     - target: {fileID: 2655056349399875004, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_Layer
@@ -215,6 +233,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4134247910216154493, guid: f2fbce097ebd21c4fbdba854f187f44f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 305d30449b30fd544bf14fe9cd829603, type: 2}
     - target: {fileID: 4757708571468574684, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_Layer
