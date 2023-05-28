@@ -30,9 +30,9 @@ public class CarChangingController : MonoBehaviour
     private bool driveFastTip = false;
     private bool tipIsOn = false;
     private float previousSpeed = 0f;
-    private TrackTreeNode curPathTreeNode;
+    public TrackTreeNode curPathTreeNode;
     private bool deadEndPlayedAudio = false;
-    private PathCreator curPathCreator
+    public PathCreator curPathCreator
     {
         get
         {

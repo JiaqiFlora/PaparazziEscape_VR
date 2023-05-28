@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using PathCreation;
 
 public class MotoManager : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class MotoManager : MonoBehaviour
             return;
         }
 
+        // TODO: - ganjiaqi. update its distance on the road to set motors' position. front: add 30%+; otherwise, just backward!
         if (!isSmaller)
             addDistance = 1;
         if (currentMotos == maxMotorsNum)
@@ -90,7 +92,17 @@ public class MotoManager : MonoBehaviour
     
     private void SpawnMotorcycle(float addDistance)
     {
-        Vector3 spawnPosition = GetNavMeshPosition(carTransform.position, carTransform.forward, spawnDistance + addDistance);
+        //Vector3 spawnPosition = GetNavMeshPosition(carTransform.position, carTransform.forward, spawnDistance + addDistance);
+
+        
+        PathCreator pathCreator = carController.curPathCreator;
+        float spawnPointDistance = carController.distanceTravelled + spawnDistance + addDistance;
+        if(spawnPointDistance > pathCreator.path.length)
+        {
+            spawnPointDistance = carController.distanceTravelled - addDistance - 10; // TODO: - ganjiaqi this number can change later!!!
+        }
+
+        Vector3 spawnPosition = pathCreator.path.GetPointAtDistance(spawnPointDistance);
         Instantiate(MotoPrefab, spawnPosition, Quaternion.identity);
     }
 
@@ -117,17 +129,15 @@ public class MotoManager : MonoBehaviour
             direction = (-1) * direction;
         }
 
-        Vector3 spawnPosition = GetNavMeshPosition(carTransform.position, direction, 40);
+        //Vector3 spawnPosition = GetNavMeshPosition(carTransform.position, direction, 40);
         for (int i = 0; i < maxMotorsNum; i++)
         {
             //Instantiate(MotoPrefab, spawnPosition, Quaternion.identity);
 
-            if (currentMotos < maxMotorsNum)
-            {
-                SpawnMotorcycle(addDistance);
-                addDistance += 4;
-                isSmaller = true;
-            }
+            SpawnMotorcycle(addDistance);
+            addDistance += 4;
+            isSmaller = true;
+            
         }
         hasSpawned = true;
     }

@@ -25,16 +25,17 @@ public class EnemyMovement : MonoBehaviour
     public GameObject frontCarCollider;
     public AudioSource bumpAudio;
 
+    private int randomToFollow;
 
     // Start is called before the first frame update
     void Start()
     {
-        int randomToFollow = Random.Range(0, MotoManager.instance.toFollow.Length);
+        
         carChangingController = MotoManager.instance.carController;
         frontCarCollider = MotoManager.instance.frontCollider;
-        playerTarget = MotoManager.instance.toFollow[randomToFollow];
-        
-        randSpeed = Random.Range(8, 15);
+        playerTarget = carChangingController.gameObject.transform;
+
+        randSpeed = Random.Range(15, 25);
 
         enemy = GetComponentInChildren<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
@@ -45,6 +46,9 @@ public class EnemyMovement : MonoBehaviour
 
         hasCollided = false;
         zRotation = this.transform.eulerAngles.z;
+
+        randomToFollow = Random.Range(0, MotoManager.instance.toFollow.Length);
+
     }
 
     // Update is called once per frame
@@ -73,6 +77,9 @@ public class EnemyMovement : MonoBehaviour
             {
                 enemy.speed = 0;
             }
+
+            if (distance > 50 && BeginningControl.instance.isOver)
+                enemy.speed = 150;
         }
 
         // simultae car collision from front in case of car moving too fast
@@ -95,16 +102,27 @@ public class EnemyMovement : MonoBehaviour
         }
 
         // make the papparazi animate based on the object it is following
-        if (playerTarget.tag == "RightSideFollow" && distance < 10)
+        if (BeginningControl.instance.isOver)
         {
-            animator.SetBool("TurnLeft", true);
+          
+            playerTarget = MotoManager.instance.toFollow[randomToFollow];
+
+            if (playerTarget.tag == "RightSideFollow" && distance < 10)
+            {
+                animator.SetBool("TurnLeft", true);
+            }
+            else animator.SetBool("TurnLeft", false);
+            if (playerTarget.tag == "LeftSideFollow" && distance < 10)
+            {
+                animator.SetBool("TurnRight", true);
+            }
+            else animator.SetBool("TurnRight", false);
         }
-        else animator.SetBool("TurnLeft", false);
-        if (playerTarget.tag == "LeftSideFollow" && distance < 10)
-        {
-            animator.SetBool("TurnRight", true); 
-        }
-        else animator.SetBool("TurnRight", false);
+
+        
+        
+
+        
     }
 
     private void OnCollisionEnter(Collision collision)
