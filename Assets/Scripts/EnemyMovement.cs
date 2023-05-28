@@ -102,27 +102,40 @@ public class EnemyMovement : MonoBehaviour
         }
 
         // make the papparazi animate based on the object it is following
-        if (BeginningControl.instance.isOver)
-        {
+        //if (BeginningControl.instance.isOver)
+        //{
           
-            playerTarget = MotoManager.instance.toFollow[randomToFollow];
+        //    playerTarget = MotoManager.instance.toFollow[randomToFollow];
 
-            if (playerTarget.tag == "RightSideFollow" && distance < 10)
-            {
-                animator.SetBool("TurnLeft", true);
-            }
-            else animator.SetBool("TurnLeft", false);
-            if (playerTarget.tag == "LeftSideFollow" && distance < 10)
-            {
-                animator.SetBool("TurnRight", true);
-            }
-            else animator.SetBool("TurnRight", false);
+        //    if (playerTarget.tag == "RightSideFollow" && distance < 10)
+        //    {
+        //        animator.SetBool("TurnLeft", true);
+        //    }
+        //    else animator.SetBool("TurnLeft", false);
+        //    if (playerTarget.tag == "LeftSideFollow" && distance < 10)
+        //    {
+        //        animator.SetBool("TurnRight", true);
+        //    }
+        //    else animator.SetBool("TurnRight", false);
+        //}
+
+        playerTarget = MotoManager.instance.toFollow[randomToFollow];
+
+        if (playerTarget.tag == "RightSideFollow" && distance < 10)
+        {
+            animator.SetBool("TurnLeft", true);
         }
+        else animator.SetBool("TurnLeft", false);
+        if (playerTarget.tag == "LeftSideFollow" && distance < 10)
+        {
+            animator.SetBool("TurnRight", true);
+        }
+        else animator.SetBool("TurnRight", false);
 
-        
-        
 
-        
+
+
+
     }
 
     private void OnCollisionEnter(Collision collision)

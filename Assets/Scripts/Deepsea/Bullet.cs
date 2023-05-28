@@ -55,4 +55,13 @@ public class Bullet : MonoBehaviour
         isShoot = false;
         DestroyObject(gameObject);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Moto")
+        {
+            Debug.Log("bullet hit the moto");
+            other.gameObject.GetComponent<EnemyMovement>().HitByBottle((carVelocity + bulletVelocity).normalized);
+        }
+    }
 }
