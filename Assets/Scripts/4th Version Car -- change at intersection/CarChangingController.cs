@@ -93,7 +93,7 @@ public class CarChangingController : MonoBehaviour
         }
 
         // if user gonna reach to the end of the road, and there are two child roads of current road, show ui tip!!!!
-        if(distanceTravelled >= curPathCreator.path.length * 0.85 && curPathTreeNode.left != null && curPathTreeNode.right != null)
+        if(distanceTravelled >= curPathCreator.path.length - 80f && curPathTreeNode.left != null && curPathTreeNode.right != null)
         {
             TurnTipOn();
         } else
