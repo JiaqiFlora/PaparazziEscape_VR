@@ -23,6 +23,9 @@ public class EnemyMovement : MonoBehaviour
     private GameObject rightCollider;
     private GameObject leftCollider;
 
+    public ParticleSystem explosion;
+    private bool isExploding = false;
+
     // sorry Hadi, change here to public, I want to try collisionForce outside.
     public float collisionForce = 20f;
     public Transform playerTarget;
@@ -63,11 +66,20 @@ public class EnemyMovement : MonoBehaviour
         {
             playerTarget = MotoManager.instance.beginningToFollow[randomBeginningFolow];
         }
+
+        explosion.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isExploding)
+        {
+            explosion.Play();
+            isExploding = false;
+        }
+            
+
         // for making the cycle stop when the car stops
         float distance = Vector3.Distance(transform.position, playerTarget.transform.position);
         
@@ -210,6 +222,7 @@ public class EnemyMovement : MonoBehaviour
         enemy.speed = carChangingController.speed;
         rb.useGravity = true;
 
+        isExploding = true;
         GetComponentInChildren<ParticleSystem>().Stop();
 
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
