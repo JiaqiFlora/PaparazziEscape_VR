@@ -30,12 +30,26 @@ public class ChampagneEjectorController : MonoBehaviour
     {
         if (isOpen)
         {
-            if(Physics.OverlapBox(detectCollider.bounds.center, detectCollider.bounds.extents, Quaternion.identity).Length <= 1)
+            Collider[] allColliders = Physics.OverlapBox(detectCollider.bounds.center, detectCollider.bounds.extents, Quaternion.identity);
+            if (allColliders.Length <= 1)
             {
                 Debug.Log("now ejector is open and nothing here!");
 
                 CloseEjector();
+            } else
+            {
+                foreach(Collider collider in allColliders)
+                {
+                    if(collider.tag == "champagne")
+                    {
+                        return;
+                    }
+                }
+
+                Debug.Log("now have other colliders inside, but no chamgpane, so can close!");
+                CloseEjector();
             }
+
         }
     }
 

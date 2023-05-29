@@ -205,7 +205,7 @@ public class EnemyMovement : MonoBehaviour
         // for collision applied force in opposite direction
         //Vector3 direction = transform.position - other.transform.forward;
 
-        Vector3 force = direction * 70;
+        Vector3 force = direction * 50;
         GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
 
         GetComponentInChildren<ParticleSystem>().Stop();
