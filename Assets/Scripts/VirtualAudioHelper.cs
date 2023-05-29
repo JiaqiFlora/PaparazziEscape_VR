@@ -32,9 +32,9 @@ public class VirtualAudioHelper : MonoBehaviour
     {
         if(now)
         {
-            audios[index].Play(); 
+            audios[index].Play();
+            Debug.Log("play the song: " + index);
             // TODO: - ganjiaqi make sure this logic!!!
-            isAudioOn = true;
             return;
         }
 

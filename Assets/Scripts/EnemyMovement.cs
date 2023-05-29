@@ -18,16 +18,18 @@ public class EnemyMovement : MonoBehaviour
     private CarChangingController carChangingController;
     private int randomToFollow;
     private int randomBeginningFolow;
+    private GameObject frontCarCollider;
+    private GameObject backCollider;
+    private GameObject rightCollider;
+    private GameObject leftCollider;
 
     // sorry Hadi, change here to public, I want to try collisionForce outside.
     public float collisionForce = 20f;
     public Transform playerTarget;
     public float rotationSpeed = 10f;
     public float maxRotationAngle = 30f;
-    public GameObject frontCarCollider;
     public AudioSource bumpAudio;
-
-    public Transform beginningPlayerTarget;
+    public bool isPreset = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,9 @@ public class EnemyMovement : MonoBehaviour
 
         carChangingController = MotoManager.instance.carController;
         frontCarCollider = MotoManager.instance.frontCollider;
+        backCollider = MotoManager.instance.backColiider;
+        rightCollider = MotoManager.instance.rightCollider;
+        leftCollider = MotoManager.instance.leftCollider;
         //playerTarget = carChangingController.gameObject.transform;
 
         randSpeed = Random.Range(15, 25);
@@ -53,8 +58,11 @@ public class EnemyMovement : MonoBehaviour
         // for beginning of the paparrazi position
         randomBeginningFolow = Random.Range(0, MotoManager.instance.beginningToFollow.Length);
         randomToFollow = Random.Range(0, MotoManager.instance.toFollow.Length);
-        playerTarget = MotoManager.instance.beginningToFollow[randomBeginningFolow];
 
+        if(!isPreset)
+        {
+            playerTarget = MotoManager.instance.beginningToFollow[randomBeginningFolow];
+        }
     }
 
     // Update is called once per frame
@@ -69,8 +77,8 @@ public class EnemyMovement : MonoBehaviour
             transform.LookAt(playerTarget);
 
             // for speed 
-            enemy.speed = randSpeed + carChangingController.speed;
-            enemy.acceleration = randSpeed + carChangingController.speed;
+            enemy.speed = randSpeed + Mathf.Abs(carChangingController.speed);
+            enemy.acceleration = randSpeed + Mathf.Abs(carChangingController.speed);
 
             // rotaion of the motorcycke ==> SWITCHED OFF - messing with animation
             float velocityMagnitude = rb.velocity.magnitude;
@@ -83,52 +91,92 @@ public class EnemyMovement : MonoBehaviour
             {
                 enemy.speed = 0;
             }
-            if (distance < 10 && !BeginningControl.instance.isOver)
+            else if (distance <= 10 && carChangingController.speed != 0)
+                enemy.speed = carChangingController.speed;
+            else if (distance < 10 && !BeginningControl.instance.isOver)
                 enemy.speed = 0;
 
             if (distance > 50 && BeginningControl.instance.isOver)
-                enemy.speed = carChangingController.speed + 50;
+                enemy.speed = Mathf.Abs(carChangingController.speed) + 50;
         }
 
         // simultae car collision from front in case of car moving too fast
         float distanceToFrontCollider = Vector3.Distance(transform.position, frontCarCollider.transform.position);
-        if (distanceToFrontCollider < 3f && BeginningControl.instance.isOver)
+        float distanceToBackCollider = Vector3.Distance(transform.position, backCollider.transform.position);
+        float distanceToLeftCollider = Vector3.Distance(transform.position, leftCollider.transform.position);
+        float distanceToRigthCollider = Vector3.Distance(transform.position, rightCollider.transform.position);
+        if (BeginningControl.instance.isOver)
         {
-            hasCollided = true;
-            enemy.enabled = false;
+            if (distanceToFrontCollider < 3f || distanceToBackCollider < 3)
+            {
+                Vector3 direction = new Vector3();
+                if (distanceToBackCollider < 3)
+                {
+                    direction = -carChangingController.gameObject.transform.forward;
+                }
+                else if (distanceToFrontCollider < 3)
+                {
+                    direction = transform.position - frontCarCollider.transform.position;
+                }
+                else if (distanceToLeftCollider < 3)
+                {
+                    direction = transform.position - leftCollider.transform.position;
+                }
+                else if (distanceToRigthCollider < 3)
+                {
+                    direction = transform.position - rightCollider.transform.position;
+                }
 
-            Vector3 direction = transform.position - frontCarCollider.transform.position;
-            direction = direction.normalized;
-            Vector3 force = direction * collisionForce;
-            rb.AddForce(force, ForceMode.Impulse);
+                hasCollided = true;
+                enemy.enabled = false;
 
-            flash.Stop();
+                direction = direction.normalized;
+                Vector3 force = direction * collisionForce;
+                rb.AddForce(force, ForceMode.Impulse);
 
-            rb.constraints = RigidbodyConstraints.FreezePositionY;
+                flash.Stop();
 
-            Destroy(gameObject, 3);
+                rb.constraints = RigidbodyConstraints.FreezePositionY;
+
+                Destroy(gameObject, 3);
+            }
         }
+        
+
+
+        
 
         // make the papparazi animate based on the object it is following
-        if (carChangingController.speed > 0)
+        if (carChangingController.speed != 0)
         {
             collisionForce = 100;
             playerTarget = MotoManager.instance.toFollow[randomToFollow];
 
-            if (playerTarget.tag == "RightSideFollow" && distance < 10)
-            {
-                animator.SetBool("TurnLeft", true);
-            }
-            else animator.SetBool("TurnLeft", false);
-            if (playerTarget.tag == "LeftSideFollow" && distance < 10)
-            {
-                animator.SetBool("TurnRight", true);
-            }
-            else animator.SetBool("TurnRight", false);
-        } else
+            //if (playerTarget.tag == "RightSideFollow" && distance < 10)
+            //{
+            //    animator.SetBool("TurnLeft", true);
+            //}
+            //else animator.SetBool("TurnLeft", false);
+            //if (playerTarget.tag == "LeftSideFollow" && distance < 10)
+            //{
+            //    animator.SetBool("TurnRight", true);
+            //}
+            //else animator.SetBool("TurnRight", false);
+        } else if(!isPreset)
         {
             playerTarget = MotoManager.instance.beginningToFollow[randomBeginningFolow];
         }
+
+        if (playerTarget.tag == "RightSideFollow" && distance < 10)
+        {
+            animator.SetBool("TurnLeft", true);
+        }
+        else animator.SetBool("TurnLeft", false);
+        if (playerTarget.tag == "LeftSideFollow" && distance < 10)
+        {
+            animator.SetBool("TurnRight", true);
+        }
+        else animator.SetBool("TurnRight", false);
 
     }
 
@@ -157,7 +205,7 @@ public class EnemyMovement : MonoBehaviour
         // for collision applied force in opposite direction
         //Vector3 direction = transform.position - other.transform.forward;
 
-        Vector3 force = direction * collisionForce;
+        Vector3 force = direction * 100;
         GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
 
         GetComponentInChildren<ParticleSystem>().Stop();

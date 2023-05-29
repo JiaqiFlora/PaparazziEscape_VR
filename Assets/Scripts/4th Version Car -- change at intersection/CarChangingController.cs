@@ -93,7 +93,7 @@ public class CarChangingController : MonoBehaviour
         }
 
         // if user gonna reach to the end of the road, and there are two child roads of current road, show ui tip!!!!
-        if(distanceTravelled >= curPathCreator.path.length * 0.7 && curPathTreeNode.left != null && curPathTreeNode.right != null)
+        if(distanceTravelled >= curPathCreator.path.length * 0.85 && curPathTreeNode.left != null && curPathTreeNode.right != null)
         {
             TurnTipOn();
         } else
@@ -109,6 +109,7 @@ public class CarChangingController : MonoBehaviour
             // here to deal with the end of game thing!
             if (planToEnd)
             {
+                Debug.Log("plan to the end!!!");
                 HitEndBillboard();
                 return;
             }
@@ -116,6 +117,7 @@ public class CarChangingController : MonoBehaviour
             if ((curPathTreeNode.left == null && curPathTreeNode.right == null))
             {
                 Debug.Log("no way");
+                speed = 0;
                 distanceTravelled = curPathCreator.path.length;
                 if(!deadEndPlayedAudio)
                 {

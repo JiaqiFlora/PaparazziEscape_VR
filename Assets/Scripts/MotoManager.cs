@@ -10,13 +10,16 @@ public class MotoManager : MonoBehaviour
     public CarChangingController carController;
     // insatances for enemyMovement scirpt
     public Transform[] toFollow;
-    public GameObject frontCollider;
     public static int currentMotos;
     public GameObject MotoPrefab;
     //public GameObject MotoPrefabLeft;
     public Transform carTransform;
     public float spawnDistance = 400f;
     public Transform[] beginningToFollow;
+    public GameObject frontCollider;
+    public GameObject backColiider;
+    public GameObject rightCollider;
+    public GameObject leftCollider;
 
     public bool Test = false;
     private bool hasSpawned = false;
@@ -64,18 +67,36 @@ public class MotoManager : MonoBehaviour
             isSmaller = true;
         }
 
-        
-        if (currentTime >= 60)
-            maxMotorsNum = 30;
+        maxMotorsNum = 10;
 
-        if (currentTime >= 80)
-            maxMotorsNum = 50;
+        //if (carController.speed == 0)
+        //{
+        //    maxMotorsNum = 10;
+        //} else
+        //{
+        //    if (currentTime >= 60)
+        //        maxMotorsNum = 20;
 
-        if (currentTime >= 100)
-            maxMotorsNum = 60;
+        //    if (currentTime >= 80)
+        //        maxMotorsNum = 30;
 
-        if (currentTime >= 120)
-            maxMotorsNum = 70;
+        //    if (currentTime >= 100)
+        //        maxMotorsNum = 35;
+        //}
+
+
+
+        //if (currentTime >= 60 && carController.speed != 0)
+        //    maxMotorsNum = 30;
+
+        //if (currentTime >= 80 && carController.speed != 0)
+        //    maxMotorsNum = 40;
+
+        //if (currentTime >= 100 && carController.speed != 0)
+        //    maxMotorsNum = 50;
+
+        //if (currentTime >= 120 && carController.speed != 0)
+        //    maxMotorsNum = 70;
 
         // Testing Flora's function
         //if (Test == true && !hasSpawned)

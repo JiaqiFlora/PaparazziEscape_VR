@@ -14,7 +14,7 @@ public class ChampagneController : MonoBehaviour
     private float myLastTime;
 
     public float speed = 10f;
-    public float searchRadius = 20f;
+    public float searchRadius = 10f;
     public float throwForce = 1000f;
     private Transform target;
     private bool flyToTarget = false;
@@ -81,9 +81,10 @@ public class ChampagneController : MonoBehaviour
     {
         isGrabbing = false;
 
-        if(FindTarget())
+        if(FindTarget() && BeginningControl.instance.isOver)
         {
             flyToTarget = true;
+            Debug.Log("fly to target, enable the trailrenderer!!!");
             GetComponent<TrailRenderer>().enabled = true;
         } else
         {
