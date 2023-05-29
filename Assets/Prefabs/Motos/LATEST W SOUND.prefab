@@ -30,7 +30,7 @@ PrefabInstance:
     - target: {fileID: 11544606514816491, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: collisionForce
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816491, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
@@ -50,18 +50,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8500001
+      objectReference: {fileID: 0}
+    - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8500001
+      objectReference: {fileID: 0}
+    - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: -595.18
+      value: -2.46
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 391.49
+      value: -1.1838684
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -435.63
+      value: 8.37
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816493, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
@@ -106,7 +116,7 @@ PrefabInstance:
     - target: {fileID: 11544606514816500, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}
       propertyPath: m_Name
-      value: LATEST W SOUND (4)
+      value: LATEST W SOUND
       objectReference: {fileID: 0}
     - target: {fileID: 11544606514816500, guid: f2fbce097ebd21c4fbdba854f187f44f,
         type: 3}

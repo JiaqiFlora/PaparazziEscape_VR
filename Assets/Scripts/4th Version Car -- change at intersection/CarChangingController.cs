@@ -96,6 +96,7 @@ public class CarChangingController : MonoBehaviour
         if(distanceTravelled >= curPathCreator.path.length - 80f && curPathTreeNode.left != null && curPathTreeNode.right != null)
         {
             TurnTipOn();
+            PaparazziIntersectionController.instance.EnableSomePaparazzi();
         } else
         {
             canvasForSteerWheel.SetActive(false);

@@ -20,6 +20,7 @@ public class MotoManager : MonoBehaviour
     public GameObject backColiider;
     public GameObject rightCollider;
     public GameObject leftCollider;
+    
 
     public bool Test = false;
     private bool hasSpawned = false;
@@ -67,22 +68,23 @@ public class MotoManager : MonoBehaviour
             isSmaller = true;
         }
 
-        maxMotorsNum = 10;
+        //maxMotorsNum = 10;
 
-        //if (carController.speed == 0)
-        //{
-        //    maxMotorsNum = 10;
-        //} else
-        //{
-        //    if (currentTime >= 60)
-        //        maxMotorsNum = 20;
+        if (carController.speed == 0)
+        {
+            maxMotorsNum = 10;
+        }
+        else
+        {
+            if (currentTime >= 60)
+                maxMotorsNum = 20;
 
-        //    if (currentTime >= 80)
-        //        maxMotorsNum = 30;
+            if (currentTime >= 80)
+                maxMotorsNum = 30;
 
-        //    if (currentTime >= 100)
-        //        maxMotorsNum = 35;
-        //}
+            if (currentTime >= 100)
+                maxMotorsNum = 35;
+        }
 
 
 

@@ -149,7 +149,7 @@ public class EnemyMovement : MonoBehaviour
         // make the papparazi animate based on the object it is following
         if (carChangingController.speed != 0)
         {
-            collisionForce = 100;
+            collisionForce = 50;
             playerTarget = MotoManager.instance.toFollow[randomToFollow];
 
             //if (playerTarget.tag == "RightSideFollow" && distance < 10)
@@ -205,7 +205,7 @@ public class EnemyMovement : MonoBehaviour
         // for collision applied force in opposite direction
         //Vector3 direction = transform.position - other.transform.forward;
 
-        Vector3 force = direction * 100;
+        Vector3 force = direction * 70;
         GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
 
         GetComponentInChildren<ParticleSystem>().Stop();

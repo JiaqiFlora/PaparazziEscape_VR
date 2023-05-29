@@ -37,6 +37,11 @@ public class RadioController : MonoBehaviour
         grabInteractable = GetComponent<XRGrabInteractable>();
         grabInteractable.selectEntered.AddListener((interactor) => OnGrabStart());
         grabInteractable.selectExited.AddListener((interactor) => OnGrabEnd());
+
+        int randomIndex = Random.Range(0, audioLists.Count);
+        audioLists[randomIndex].Play();
+        Debug.Log($"play a new song. index is: {randomIndex}");
+        index = randomIndex;
     }
 
     // Update is called once per frame
