@@ -216,14 +216,14 @@ public class CarChangingController : MonoBehaviour
 
     public void TurnRight()
     {
-        //Debug.Log("turn right!!!");
+        Debug.Log("turn right!!!");
         turnLeft = false;
 
     }
 
     public void TurnLeft()
     {
-        //Debug.Log("turn left!!!");
+        Debug.Log("turn left!!!");
         turnLeft = true;
     }
 

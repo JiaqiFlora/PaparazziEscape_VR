@@ -34,6 +34,9 @@ TagManager:
   - RightSideFollow
   - LeftSideFollow
   - Moto
+  - bullet
+  - turnLeft
+  - turnRight
   layers:
   - Default
   - TransparentFX
@@ -49,7 +52,7 @@ TagManager:
   - test
   - DrivableRoad
   - uselessMotor
-  - 
+  - AvoidInterAndPlayer
   - 
   - 
   - 
