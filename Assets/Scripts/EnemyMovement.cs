@@ -205,8 +205,10 @@ public class EnemyMovement : MonoBehaviour
         // for collision applied force in opposite direction
         //Vector3 direction = transform.position - other.transform.forward;
 
-        Vector3 force = direction * 50;
+        Vector3 force = direction * 10;
         GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+        enemy.speed = carChangingController.speed;
+        rb.useGravity = true;
 
         GetComponentInChildren<ParticleSystem>().Stop();
 
