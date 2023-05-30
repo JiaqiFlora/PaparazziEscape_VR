@@ -36,6 +36,7 @@ public class DeadBillBoard : MonoBehaviour
         if (other.tag == "Car" && !isDead)
         {
             isDead = true;
+            Debug.Log("trigger is dead!");
 
             //Debug.Log("trigger dead billboard!");
             //animator.SetTrigger("fall");

@@ -61,7 +61,7 @@ public class MotoManager : MonoBehaviour
 
         currentMotos = GameObject.FindGameObjectsWithTag("Moto").Length;
 
-        Debug.Log("now the number of motors: " + currentMotos);
+        //Debug.Log("now the number of motors: " + currentMotos);
         if (currentMotos < maxMotorsNum)
         {
             SpawnMotorcycle(addDistance);
@@ -168,10 +168,14 @@ public class MotoManager : MonoBehaviour
 
     public void DestroyAllPaparazzi()
     {
+        maxMotorsNum = 0;
+        Debug.Log("prepare to destroy all papas");
         GameObject[] allMotos = GameObject.FindGameObjectsWithTag("Moto");
 
         foreach(GameObject motor in allMotos)
         {
+            Debug.Log("destroy them one by one!!");
+            DestroyObject(motor);
             DestroyImmediate(motor);
         }
     }
