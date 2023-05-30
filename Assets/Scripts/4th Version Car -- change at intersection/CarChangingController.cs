@@ -276,7 +276,7 @@ public class CarChangingController : MonoBehaviour
         planToEnd = true;
 
         // here to change the speed and disable thottle and brake
-        speed = 60;
+        speed = 50;
         newGear.SetActive(false);
         brakeObject.SetActive(false);
     }

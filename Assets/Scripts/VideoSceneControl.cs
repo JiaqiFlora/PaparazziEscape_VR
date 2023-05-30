@@ -10,11 +10,14 @@ public class VideoSceneControl : MonoBehaviour
     public Transform userTransform;
     public GameObject player;
 
+    public GameObject creditCards;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        creditCards.SetActive(false);
         StartCoroutine(StartEndingVideo());
+
     }
 
     // Update is called once per frame
@@ -33,5 +36,8 @@ public class VideoSceneControl : MonoBehaviour
         //yield return new WaitForSeconds(1f);
         yield return null;
         videoPlayer.Play();
+
+        yield return new WaitForSeconds(30.7f);
+        creditCards.SetActive(true);
     }
 }

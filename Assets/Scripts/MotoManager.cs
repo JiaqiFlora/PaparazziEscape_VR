@@ -7,6 +7,7 @@ using PathCreation;
 public class MotoManager : MonoBehaviour
 {
     public static MotoManager instance;
+
     public CarChangingController carController;
     // insatances for enemyMovement scirpt
     public Transform[] toFollow;
@@ -31,6 +32,7 @@ public class MotoManager : MonoBehaviour
 
     private float addDistance = 1;
     private bool isSmaller = false;
+
     private void Awake()
     {
         if(instance != null && instance != this)
@@ -52,7 +54,6 @@ public class MotoManager : MonoBehaviour
             return;
         }
 
-        // TODO: - ganjiaqi. update its distance on the road to set motors' position. front: add 30%+; otherwise, just backward!
         if (!isSmaller)
             addDistance = 1;
         if (currentMotos == maxMotorsNum)
@@ -163,5 +164,15 @@ public class MotoManager : MonoBehaviour
             
         }
         hasSpawned = true;
+    }
+
+    public void DestroyAllPaparazzi()
+    {
+        GameObject[] allMotos = GameObject.FindGameObjectsWithTag("Moto");
+
+        foreach(GameObject motor in allMotos)
+        {
+            DestroyImmediate(motor);
+        }
     }
 }

@@ -11,9 +11,11 @@ public class VirtualAudioHelper : MonoBehaviour
     // 1: accessoryIntro
     // 2: intersection
     // 3: deadEnd
-    // 4: fallingBill
+    // 4: fallingBillboard
     // 5: driveFast
     // 6: billboard crash
+    // 7: ending crowd screaming
+    // 8: great job, congrats!
     public List<AudioSource> audios;
 
     private void Awake()
