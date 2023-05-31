@@ -25,7 +25,8 @@ public class RestartGame : MonoBehaviour
     {
         if (yButton.action.triggered) {
             var currentScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(currentScene.name);
+            //SceneManager.LoadScene(currentScene.name);
+            SceneManager.LoadScene(0);
         }
     }
 }
