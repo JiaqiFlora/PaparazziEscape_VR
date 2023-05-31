@@ -35,12 +35,12 @@ public class ThrottleMovementForCarChange : MonoBehaviour
                 Debug.Log("reach to gear3");
                 break;
             case "gear4":
-                carChangingController.speed = 60f;
+                carChangingController.speed = 90f;
                 audioSource.Play();
                 Debug.Log("reach to gear4");
                 break;
             case "gear5":
-                carChangingController.speed = 90f;
+                carChangingController.speed = 60f;
                 audioSource.Play();
                 Debug.Log("reach to gear5");
                 break;
