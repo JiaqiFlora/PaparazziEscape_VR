@@ -49,6 +49,12 @@ public class MotoManager : MonoBehaviour
     {
         currentTime += Time.deltaTime;
 
+        if(carController.planToEnd)
+        {
+            DestroyAllPaparazzi();
+            return;
+        }
+
         if (!BeginningControl.instance.isOver || carController.planToEnd)
         {
             return;
