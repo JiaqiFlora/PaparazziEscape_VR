@@ -49,7 +49,7 @@ public class MotoManager : MonoBehaviour
     {
         currentTime += Time.deltaTime;
 
-        if (!BeginningControl.instance.isOver)
+        if (!BeginningControl.instance.isOver || carController.planToEnd)
         {
             return;
         }
@@ -64,12 +64,18 @@ public class MotoManager : MonoBehaviour
         //Debug.Log("now the number of motors: " + currentMotos);
         if (currentMotos < maxMotorsNum)
         {
+            Debug.Log("spawn new motor!");
             SpawnMotorcycle(addDistance);
             addDistance += 4;
             isSmaller = true;
         }
 
         //maxMotorsNum = 10;
+
+        if(carController.planToEnd)
+        {
+            return;
+        }
 
         if (carController.speed == 0)
         {
@@ -86,26 +92,6 @@ public class MotoManager : MonoBehaviour
             if (currentTime >= 100)
                 maxMotorsNum = 35;
         }
-
-
-
-        //if (currentTime >= 60 && carController.speed != 0)
-        //    maxMotorsNum = 30;
-
-        //if (currentTime >= 80 && carController.speed != 0)
-        //    maxMotorsNum = 40;
-
-        //if (currentTime >= 100 && carController.speed != 0)
-        //    maxMotorsNum = 50;
-
-        //if (currentTime >= 120 && carController.speed != 0)
-        //    maxMotorsNum = 70;
-
-        // Testing Flora's function
-        //if (Test == true && !hasSpawned)
-        //{
-        //    SpawnMotorcycleAtEnd();
-        //}
 
     }
 

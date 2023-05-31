@@ -66,7 +66,10 @@ public class DeadBillBoard : MonoBehaviour
         VirtualAudioHelper.instance.PlayVirtualAudio(8, true, true); // congrates audio
         RadioController.instance.StopSongs();
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1);
+        MotoManager.instance.DestroyAllPaparazzi();
+
+        yield return new WaitForSeconds(4f);
 
         RadioController.instance.StopSongs();
         VirtualAudioHelper.instance.PlayVirtualAudio(4, true, true); // omg, falling billboard

@@ -42,7 +42,7 @@ public class CarChangingController : MonoBehaviour
   
     
     private bool turnLeft = true; // true for left, false for right
-    private bool planToEnd = false; 
+    public bool planToEnd = false; 
 
     // Start is called before the first frame update
     void Start()
